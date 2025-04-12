@@ -1,0 +1,18 @@
+[
+  {
+    "modid": "kazzutils",
+    "name": "KazzUtils",
+    "description": "Utility Mod for Hypixel Skyblock. This mod uses Features programmed by Skytils, Skyhanni, Skyblock Addons and Dulkir. Credits goes towards them. \n(I also have made my own features but big props to them <3)",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "RealKazz"
+    ],
+    "credits": "Dulkit, Skytils, SkyHanni, Skyblock Addons",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
