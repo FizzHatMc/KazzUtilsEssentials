@@ -1,7 +1,20 @@
 package de.kazzutils
 
+
+import de.kazzutils.commands.CommandManager
+import de.kazzutils.core.Config
 import de.kazzutils.core.GuiManager
+import de.kazzutils.core.PersistentSave
+import de.kazzutils.gui.OptionsGui
+import de.kazzutils.gui.ReopenableGUI
+import de.kazzutils.handler.transformers.AccessorCommandHandler
+import de.kazzutils.mixin.transformers.accessors.AccessorGuiStreamUnavailable
+import de.kazzutils.mixin.transformers.accessors.AccessorSettingsGui
+import de.kazzutils.utils.Utils
 import de.kazzutils.utils.colors.CustomColor
+import de.kazzutils.utils.graphics.ScreenRenderer
+import de.kazzutils.utils.tickTimer
+import kotlinx.coroutines.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -11,33 +24,179 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.GuiButton
+import net.minecraft.client.gui.GuiGameOver
+import net.minecraft.client.gui.GuiIngameMenu
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.client.settings.KeyBinding
+import net.minecraft.client.stream.ChatController
 import net.minecraft.init.Blocks
+import net.minecraftforge.client.ClientCommandHandler
+import net.minecraftforge.client.event.GuiOpenEvent
+import net.minecraftforge.client.event.GuiScreenEvent
+import net.minecraftforge.client.event.RenderGameOverlayEvent
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
+import net.minecraftforge.fml.common.eventhandler.EventPriority
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.fml.common.gameevent.TickEvent
+import net.minecraftforge.fml.common.network.FMLNetworkEvent
 import java.io.File
 import java.util.*
+import java.util.concurrent.Executors
+import java.util.concurrent.ThreadPoolExecutor
+import kotlin.coroutines.CoroutineContext
 
-@Mod(modid = "kazzutils", useMetadata = true, version = "0.0.2")
+@Mod(modid = "kazzutils",
+    useMetadata = true,
+    version = "0.0.2",
+    clientSideOnly = true,
+    guiFactory = "de.kazzutils.core.ForgeGuiFactory")
 class KazzUtils {
+
     @Mod.EventHandler
-    fun init(event: FMLInitializationEvent?) {
-        print("Dirt: " + Blocks.dirt.unlocalizedName)
-        // Below is a demonstration of an access-transformed class access.
-        print("Color State: " + GlStateManager.Color())
+    fun preInit(event: FMLPreInitializationEvent) {
+        CommandManager()
+        guiManager = GuiManager
     }
 
-    companion object {
+    @Mod.EventHandler
+    fun init(event: FMLInitializationEvent?) {
+        config.initialize()
+        arrayOf(
+            this,
+            guiManager,
+        ).forEach(MinecraftForge.EVENT_BUS::register)
+    }
+
+    @Mod.EventHandler
+    fun postInit(event: FMLPostInitializationEvent) {
+        PersistentSave.loadData()
+        ScreenRenderer.init()
+    }
+
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    fun onTick(event: TickEvent.ClientTickEvent) {
+        if (event.phase != TickEvent.Phase.START) return
+
+        if (displayScreen != null) {
+            if (mc.thePlayer?.openContainer == mc.thePlayer?.inventoryContainer) {
+                mc.displayGuiScreen(displayScreen)
+                displayScreen = null
+            }
+        }
+    }
+
+
+    @SubscribeEvent
+    fun onConnect(event: FMLNetworkEvent.ClientConnectedToServerEvent) {
+
+    }
+
+
+    @SubscribeEvent
+    fun onDisconnect(event: FMLNetworkEvent.ClientDisconnectionFromServerEvent) {
+
+    }
+
+    @SubscribeEvent
+    fun onRenderGameOverlay(event: RenderGameOverlayEvent) {
+        if (mc.currentScreen is OptionsGui && event.type == RenderGameOverlayEvent.ElementType.CROSSHAIRS) {
+            event.isCanceled = true
+        }
+    }
+
+    @SubscribeEvent
+    fun onGuiInitPost(event: GuiScreenEvent.InitGuiEvent.Post) {
+        if (config.configButtonOnPause && event.gui is GuiIngameMenu) {
+            val x = event.gui.width - 105
+            val x2 = x + 100
+            var y = event.gui.height - 22
+            var y2 = y + 20
+            val sorted = event.buttonList.sortedWith { a, b -> b.yPosition + b.height - a.yPosition + a.height }
+            for (button in sorted) {
+                val otherX = button.xPosition
+                val otherX2 = button.xPosition + button.width
+                val otherY = button.yPosition
+                val otherY2 = button.yPosition + button.height
+                if (otherX2 > x && otherX < x2 && otherY2 > y && otherY < y2) {
+                    y = otherY - 20 - 2
+                    y2 = y + 20
+                }
+            }
+            event.buttonList.add(GuiButton(6969420, x, 0.coerceAtLeast(y), 100, 20, "KazzUtils"))
+        }
+    }
+
+    @SubscribeEvent
+    fun onGuiAction(event: GuiScreenEvent.ActionPerformedEvent.Post) {
+        if (config.configButtonOnPause && event.gui is GuiIngameMenu && event.button.id == 6969420) {
+            displayScreen = OptionsGui()
+        }
+    }
+
+    @SubscribeEvent
+    fun onGuiChange(event: GuiOpenEvent) {
+        val old = mc.currentScreen
+        if (event.gui == null && old is OptionsGui && old.parent != null) {
+            displayScreen = old.parent
+        } else if (event.gui == null && config.reopenOptionsMenu) {
+            if (old is ReopenableGUI || (old is AccessorSettingsGui && old.config is Config)) {
+                tickTimer(1) {
+                    if (mc.thePlayer?.openContainer == mc.thePlayer?.inventoryContainer)
+                        displayScreen = OptionsGui()
+                }
+            }
+        }
+        if (old is AccessorGuiStreamUnavailable) {
+            if (event.gui == null && !(Utils.inSkyblock && old.parentScreen is GuiGameOver)) {
+                event.gui = old.parentScreen
+            }
+        }
+    }
+
+
+
+    companion object : CoroutineScope {
         const val MOD_ID = "kazzutils"
-        val mc: Minecraft = Minecraft.getMinecraft()
+        const val VERSION = "0.0.2"
+
+        @JvmStatic
+        val mc: Minecraft by lazy {
+            Minecraft.getMinecraft()
+        }
+
+        val config by lazy {
+            Config
+        }
+
         val modDir by lazy {
             File(File(mc.mcDataDir, "config"), "kazzutils").also {
                 it.mkdirs()
                 File(it, "trackers").mkdirs()
             }
         }
+
+        @JvmField
+        val threadPool = Executors.newFixedThreadPool(10) as ThreadPoolExecutor
+
+        @JvmField
+        val dispatcher = threadPool.asCoroutineDispatcher()
+
+
+
+        val IO = object : CoroutineScope {
+            override val coroutineContext = Dispatchers.IO + SupervisorJob() + CoroutineName("KazzUtils IO")
+        }
+
+        override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob() + CoroutineName("KazzUtils")
 
         @JvmField
         var displayScreen: GuiScreen? = null

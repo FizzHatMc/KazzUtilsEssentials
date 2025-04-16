@@ -1,10 +1,14 @@
 package de.kazzutils.utils
 
+import de.kazzutils.KazzUtils
 import de.kazzutils.KazzUtils.Companion.mc
 import de.kazzutils.utils.colors.ColorFactory.web
 import de.kazzutils.utils.colors.CustomColor
 import de.kazzutils.utils.colors.CyclingTwoColorGradient
 import de.kazzutils.utils.colors.RainbowColor
+import gg.essential.vigilance.Vigilant
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.Job
 import net.minecraft.client.settings.GameSettings
 import java.awt.Color
 import java.io.File
@@ -52,6 +56,12 @@ object Utils {
             }
         }
     }
+
+
+    fun Vigilant.openGUI(): Job = KazzUtils.launch {
+        KazzUtils.displayScreen = this@openGUI.gui()
+    }
+
 
     fun colorFromString(string: String): Color {
         return try {

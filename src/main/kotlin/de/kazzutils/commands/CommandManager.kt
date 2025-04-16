@@ -2,11 +2,16 @@ package de.kazzutils.commands
 
 
 import de.kazzutils.KazzUtils
+import de.kazzutils.KazzUtils.Companion.displayScreen
 import de.kazzutils.KazzUtils.Companion.mc
 import de.kazzutils.commands.SimpleCommand.ProcessCommandRunnable
+import de.kazzutils.core.Config
 
 import de.kazzutils.gui.KeyShortcutsGui
+import de.kazzutils.gui.OptionsGui
 import de.kazzutils.gui.editing.ElementaEditingGui
+import de.kazzutils.utils.Utils.openGUI
+import de.kazzutils.utils.chat.RequiredPetXp
 import de.kazzutils.utils.randomutils.ChatUtils
 import net.minecraft.command.ICommandSender
 import net.minecraft.util.BlockPos
@@ -17,9 +22,13 @@ class CommandManager {
 
     init {
 
+        registerCommand("Test") {ChatUtils.messageToChat("Test")}
 
         registerCommand("kazzutils") {
-            KazzUtils.configManager.openConfigGui()
+            ChatUtils.messageToChat("Kazzutils command")
+            displayScreen = OptionsGui()
+            return@registerCommand
+
         }
         registerCommand("kazz"){ args ->
             val arg = args.firstOrNull()
@@ -38,7 +47,7 @@ class CommandManager {
 
 
             }
-            if(args.isEmpty())KazzUtils.configManager.openConfigGui()
+            if(args.isEmpty()) displayScreen = OptionsGui()
         }
 
         //TODO: Learn how to add Forced Args, example: /calcpet rarity (options being leg, epic, rare, uncommon, common) endlvl
@@ -81,7 +90,7 @@ class CommandManager {
             }
 
 
-            if(args.isEmpty())KazzUtils.configManager.openConfigGui()
+            //if(args.isEmpty())KazzUtils.configManager.openConfigGui()
         }
         /*
         registerCommand("formatmessage") { args ->

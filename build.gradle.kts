@@ -99,6 +99,7 @@ dependencies {
 
     implementation("gg.essential:vigilance:306")
     implementation("gg.essential:elementa:704")
+
     implementation("gg.essential:universalcraft-$mcVersion-forge:401") //Forge 1.8.9
     //implementation("gg.essential:universalcraft-1.20.1-forge:401")
 
