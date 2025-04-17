@@ -14,6 +14,31 @@ object Config : Vigilant(
     sortingBehavior = ConfigSorting
 ) {
 
+    init {
+        initialize()
+        // First Field = Option that is Hidden
+        // Second Field = Condition Field
+        // Not option Names but Variable Names
+        // If second field then First is shown
+        //addDependency("dependent", "dependency")
+
+        //Animation dependencies
+        addDependency("customSize", "customAnimations")
+        addDependency("doesScaleSwing", "customAnimations")
+        addDependency("customX", "customAnimations")
+        addDependency("customY", "customAnimations")
+        addDependency("customZ", "customAnimations")
+        addDependency("customYaw", "customAnimations")
+        addDependency("customPitch", "customAnimations")
+        addDependency("customRoll", "customAnimations")
+        addDependency("customSpeed", "customAnimations")
+        addDependency("ignoreHaste", "customAnimations")
+        addDependency("drinkingSelector", "customAnimations")
+
+        addDependency("partyPrefix", "partyCommands")
+
+    }
+
     @Property(
         type = PropertyType.SWITCH,
         name = "Useless Switch",
@@ -195,7 +220,7 @@ object Config : Vigilant(
         name = "Enable Chat Emotes",
         description = "Enables MVP++ Emotes for People with MVP++. DO NOT USE. CURRENTLY BUGGED CAN GET YOU CHAT MUTED IF YOU GOT BAD FRIENDS.",
         category = "Chat Features",
-        subcategory = "general"
+        subcategory = "General"
     )
     var chatEmotes = false
 
