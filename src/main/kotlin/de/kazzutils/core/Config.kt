@@ -193,7 +193,7 @@ object Config : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Enable Chat Emotes",
-        description = "Enables MVP++ Emotes for People with MVP++",
+        description = "Enables MVP++ Emotes for People with MVP++. DO NOT USE. CURRENTLY BUGGED CAN GET YOU CHAT MUTED IF YOU GOT BAD FRIENDS.",
         category = "Chat Features",
         subcategory = "general"
     )

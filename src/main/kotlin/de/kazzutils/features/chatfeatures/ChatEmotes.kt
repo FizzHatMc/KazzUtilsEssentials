@@ -53,7 +53,7 @@ class ChatEmotes {
 
         val reg = "(\\[.+])? ?(.+):"
 
-
+        //TODO: FIX -> MESSAGES ARE SENT FROM OTHER PLAYERS AND NOT JUST THE MOD USER
 
         if (message.startsWith("/") &&
             !message.startsWith("/pc") &&
