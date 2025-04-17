@@ -1,4 +1,4 @@
-package de.kazzutils.features.keyshortcut
+package de.kazzutils.features.misc
 
 import de.kazzutils.KazzUtils
 import de.kazzutils.core.PersistentSave

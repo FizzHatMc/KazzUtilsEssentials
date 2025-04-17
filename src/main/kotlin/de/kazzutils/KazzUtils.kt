@@ -13,7 +13,8 @@ import de.kazzutils.utils.Utils
 import de.kazzutils.utils.colors.CustomColor
 import de.kazzutils.utils.graphics.ScreenRenderer
 import de.kazzutils.core.tickTimer
-import de.kazzutils.features.keyshortcut.KeyShortcuts
+import de.kazzutils.features.chatStuff.ChatCommands
+import de.kazzutils.features.misc.KeyShortcuts
 import de.kazzutils.handler.EventHandler
 import de.kazzutils.handler.hook.EntityPlayerSPHook
 import de.kazzutils.handler.transformers.PacketThreadUtilTransformer
@@ -63,6 +64,8 @@ class KazzUtils {
         CommandManager()
         guiManager = GuiManager
 
+
+        reg(ChatCommands())
 
     }
 

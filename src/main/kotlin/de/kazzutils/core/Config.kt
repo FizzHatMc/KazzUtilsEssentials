@@ -168,7 +168,27 @@ object Config : Vigilant(
         min = 0,
         max = 2
     )
-    var drinkingSelector = 2;
+    var drinkingSelector = 2
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Enable Party Commands",
+        description = "Enable Party Commands",
+        category = "Party",
+        subcategory = "Commands"
+    )
+    var partyCommands = false
+
+
+    @Property(
+        type = PropertyType.SELECTOR,
+        name = "Party commands Prefix",
+        description = "Choose what Prefix Party commands should use",
+        category = "Party",
+        subcategory = "Commands",
+        options= ["!",".","?",",","-"]
+    )
+    var partyPrefix = 1
 
 
 

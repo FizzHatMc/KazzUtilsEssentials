@@ -1,7 +1,7 @@
 package de.kazzutils.gui
 
 import de.kazzutils.core.PersistentSave
-import de.kazzutils.features.keyshortcut.KeyShortcuts
+import de.kazzutils.features.misc.KeyShortcuts
 import de.kazzutils.gui.components.SimpleButton
 import de.kazzutils.utils.Utils
 import gg.essential.elementa.ElementaVersion
