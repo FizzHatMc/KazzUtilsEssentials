@@ -174,8 +174,8 @@ object Config : Vigilant(
         type = PropertyType.SWITCH,
         name = "Enable Party Commands",
         description = "Enable Party Commands",
-        category = "Party",
-        subcategory = "Commands"
+        category = "Chat Features",
+        subcategory = "Party Commands"
     )
     var partyCommands = false
 
@@ -184,12 +184,20 @@ object Config : Vigilant(
         type = PropertyType.SELECTOR,
         name = "Party commands Prefix",
         description = "Choose what Prefix Party commands should use",
-        category = "Party",
-        subcategory = "Commands",
+        category = "Chat Features",
+        subcategory = "Party Commands",
         options= ["!",".","?",",","-"]
     )
     var partyPrefix = 1
 
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Enable Chat Emotes",
+        description = "Enables MVP++ Emotes for People with MVP++",
+        category = "Chat Features",
+        subcategory = "general"
+    )
+    var chatEmotes = false
 
 
 }
