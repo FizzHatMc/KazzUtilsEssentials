@@ -5,7 +5,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.spongepowered.asm.mixin.Mixin
 
-@Mixin
+
 class RenderLivingEntityHelper{
 
     @SubscribeEvent

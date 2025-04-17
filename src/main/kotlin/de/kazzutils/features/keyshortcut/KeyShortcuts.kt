@@ -33,6 +33,7 @@ object KeyShortcuts : PersistentSave(File(KazzUtils.modDir, "keyshortcuts.json")
         for (s in shortcuts) {
             if (s.keyCode == 0) continue
             if (s.keyCode == key && s.modifiers == modifiers) {
+
                 if (s.message.startsWith("/") && ClientCommandHandler.instance.executeCommand(
                         mc.thePlayer,
                         s.message

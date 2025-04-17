@@ -1,4 +1,4 @@
-package de.kazzutils.utils
+package de.kazzutils.core
 
 import de.kazzutils.KazzUtils.Companion.mc
 import de.kazzutils.event.TickEvent

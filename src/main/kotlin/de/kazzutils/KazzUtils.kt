@@ -7,13 +7,17 @@ import de.kazzutils.core.GuiManager
 import de.kazzutils.core.PersistentSave
 import de.kazzutils.gui.OptionsGui
 import de.kazzutils.gui.ReopenableGUI
-import de.kazzutils.handler.transformers.AccessorCommandHandler
 import de.kazzutils.mixin.transformers.accessors.AccessorGuiStreamUnavailable
 import de.kazzutils.mixin.transformers.accessors.AccessorSettingsGui
 import de.kazzutils.utils.Utils
 import de.kazzutils.utils.colors.CustomColor
 import de.kazzutils.utils.graphics.ScreenRenderer
-import de.kazzutils.utils.tickTimer
+import de.kazzutils.core.tickTimer
+import de.kazzutils.features.keyshortcut.KeyShortcuts
+import de.kazzutils.handler.EventHandler
+import de.kazzutils.handler.hook.EntityPlayerSPHook
+import de.kazzutils.handler.transformers.PacketThreadUtilTransformer
+import de.kazzutils.utils.randomutils.ChatUtils
 import kotlinx.coroutines.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -28,11 +32,6 @@ import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiGameOver
 import net.minecraft.client.gui.GuiIngameMenu
 import net.minecraft.client.gui.GuiScreen
-import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.client.settings.KeyBinding
-import net.minecraft.client.stream.ChatController
-import net.minecraft.init.Blocks
-import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.client.event.GuiOpenEvent
 import net.minecraftforge.client.event.GuiScreenEvent
 import net.minecraftforge.client.event.RenderGameOverlayEvent
@@ -40,7 +39,6 @@ import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
-import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.EventPriority
@@ -64,6 +62,8 @@ class KazzUtils {
     fun preInit(event: FMLPreInitializationEvent) {
         CommandManager()
         guiManager = GuiManager
+
+
     }
 
     @Mod.EventHandler
@@ -72,6 +72,13 @@ class KazzUtils {
         arrayOf(
             this,
             guiManager,
+            KeyShortcuts,
+            ScreenRenderer,
+            EntityPlayerSPHook,
+            PacketThreadUtilTransformer,
+            EventHandler,
+            ChatUtils,
+
         ).forEach(MinecraftForge.EVENT_BUS::register)
     }
 
@@ -221,6 +228,10 @@ class KazzUtils {
         }
     }
 
+    private fun reg(obj: Any){
+        MinecraftForge.EVENT_BUS.register(obj)
+    }
+
     object RegexAsString : KSerializer<Regex> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Regex", PrimitiveKind.STRING)
         override fun deserialize(decoder: Decoder): Regex = Regex(decoder.decodeString())
@@ -231,5 +242,16 @@ class KazzUtils {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("UUID", PrimitiveKind.STRING)
         override fun deserialize(decoder: Decoder): UUID = UUID.fromString(decoder.decodeString())
         override fun serialize(encoder: Encoder, value: UUID) = encoder.encodeString(value.toString())
+    }
+
+    private fun String.toDashedUUID(): String {
+        if (this.length != 32) return this
+        return buildString {
+            append(this@toDashedUUID)
+            insert(20, "-")
+            insert(16, "-")
+            insert(12, "-")
+            insert(8, "-")
+        }
     }
 }
