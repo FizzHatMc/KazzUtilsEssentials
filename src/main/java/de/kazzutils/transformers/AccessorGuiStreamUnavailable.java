@@ -1,4 +1,4 @@
-package de.kazzutils.mixin.transformers.accessors;
+package de.kazzutils.transformers;
 
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.stream.GuiStreamUnavailable;

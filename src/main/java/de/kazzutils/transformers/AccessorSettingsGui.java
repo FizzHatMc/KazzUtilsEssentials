@@ -1,4 +1,4 @@
-package de.kazzutils.mixin.transformers.accessors;
+package de.kazzutils.transformers;
 
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.gui.SettingsGui;

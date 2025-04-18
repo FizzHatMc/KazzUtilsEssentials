@@ -5,8 +5,8 @@ import de.kazzutils.core.GuiManager
 import de.kazzutils.core.PersistentSave
 import de.kazzutils.gui.OptionsGui
 import de.kazzutils.gui.ReopenableGUI
-import de.kazzutils.mixin.transformers.accessors.AccessorGuiStreamUnavailable
-import de.kazzutils.mixin.transformers.accessors.AccessorSettingsGui
+import de.kazzutils.transformers.AccessorGuiStreamUnavailable
+import de.kazzutils.transformers.AccessorSettingsGui
 import de.kazzutils.utils.Utils
 import de.kazzutils.utils.colors.CustomColor
 import de.kazzutils.utils.graphics.ScreenRenderer

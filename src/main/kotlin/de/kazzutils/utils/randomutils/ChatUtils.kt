@@ -1,12 +1,10 @@
 package de.kazzutils.utils.randomutils
 
-import de.kazzutils.KazzUtils
 import de.kazzutils.KazzUtils.Companion.mc
 import de.kazzutils.utils.Utils.removeMinecraftColorCodes
 import net.minecraft.util.ChatComponentText
 import net.minecraft.util.EnumChatFormatting
 import net.minecraftforge.client.event.ClientChatReceivedEvent
-import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.text.DecimalFormat
 import java.util.regex.Pattern
@@ -18,7 +16,7 @@ object ChatUtils {
     private val manaUseRegex = Regex("""-(\d+) Mana""")
     private val manaRegex = Regex("""(?<num>[0-9,.]+)/(?<den>[0-9,.]+)✎(| Mana| (?<overflow>-?[0-9,.]+)ʬ)""")
     private val skillRegex = Regex("\\+(?<gained>[0-9,.]+) (?<skillName>[A-Za-z]+) (?<progress>\\((((?<current>[0-9.,kM]+)/(?<total>[0-9.,kM]+))|((?<percent>[0-9.,]+)%))\\))")
-    private val messageRegex = Regex("""^(?:\[(\d+)])?\s*(?:\[(MVP\+\+|MVP\+|VIP\+|VIP)])?\s*(\p{So})?\s*([^\s\[\]:]+)\s*(\p{So})?\s*:\s*(.*)$""")
+    private val messageRegex = Regex("""\s?\[(?:.*?)(\w+)\]:\s(.*)""")
 
     var health: String? = null
     var manaUse: String? = null
@@ -26,38 +24,19 @@ object ChatUtils {
     var skill: String? = null
     var defense: String? = null
 
-    fun parseChatMessage(message: String): Map<String, String?> {
+    fun parseChatMessage(message: String): Map<String, String> {
+        val regex = Regex(""".*?(\b\w+):\s(.*)""")
 
-
-        val match = messageRegex.matchEntire(message)
-
-        return if (match != null && match.groupValues.size >= 6) {
-            val level = match.groupValues.getOrNull(1)?.takeIf { it.isNotEmpty() }
-            val rank = match.groupValues.getOrNull(2)?.takeIf { it.isNotEmpty() }
-            val faction = match.groupValues.getOrNull(3)?.takeIf { it.isNotEmpty() }
-            val name = match.groupValues.getOrNull(4)?.takeIf { it.isNotEmpty() }
-            val profileType = match.groupValues.getOrNull(5)?.takeIf { it.isNotEmpty() }
-            val content = match.groupValues.getOrNull(6)?.takeIf { it.isNotEmpty() }
-
-            mapOf(
-                "level" to level,
-                "rank" to rank,
-                "name" to name,
-                "faction" to faction,
-                "profiletype" to profileType,
-                "content" to content
-            )
+        val matchResult = regex.find(message)
+        return if (matchResult != null && matchResult.groupValues.size >= 3) {
+            val name = matchResult.groupValues[1]
+            val content = matchResult.groupValues[2]
+            mapOf("name" to name, "content" to content)
         } else {
-            mapOf(
-                "level" to null,
-                "rank" to null,
-                "name" to null,
-                "faction" to null,
-                "profiletype" to null,
-                "content" to null
-            )
+            mapOf("name" to "null", "content" to "null")
         }
     }
+
 
 
 
