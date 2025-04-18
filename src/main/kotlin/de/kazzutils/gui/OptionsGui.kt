@@ -1,12 +1,10 @@
 package de.kazzutils.gui
 
-//import gg.essential.api.EssentialAPI
 import de.kazzutils.KazzUtils
 import de.kazzutils.gui.components.SimpleButton
 import de.kazzutils.gui.editing.ElementaEditingGui
 import de.kazzutils.gui.editing.VanillaEditingGui
 import de.kazzutils.utils.Utils.openGUI
-
 import gg.essential.elementa.ElementaVersion
 import gg.essential.elementa.WindowScreen
 import gg.essential.elementa.components.UIText
@@ -21,7 +19,6 @@ import gg.essential.universal.UKeyboard
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import java.net.URI
-
 
 class OptionsGui(val parent: GuiScreen? = null) :
     WindowScreen(ElementaVersion.V2) {
