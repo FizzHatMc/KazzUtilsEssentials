@@ -43,7 +43,7 @@ object DownTimeObject{
 
         override fun render() {
             var displayText = """
-                §aDowntime Users:
+                §aDowntime:
                 """.trimIndent()
 
             dtNames.forEach{displayText += it + "\n"}
@@ -52,9 +52,10 @@ object DownTimeObject{
         }
 
         override fun demoRender() {
-            val displayText = """
-                §aDowntime Users:
+            var displayText = """
+                §aDowntime:
                 """.trimIndent()
+            dtNames.forEach{displayText += it + "\n"}
             val lines = displayText.split('\n')
             RenderUtils.drawAllInList(this, lines)
         }
@@ -62,7 +63,7 @@ object DownTimeObject{
         override val height: Int
             get() = ScreenRenderer.fontRenderer.FONT_HEIGHT * 7
         override val width: Int
-            get() = ScreenRenderer.fontRenderer.getStringWidth("§cWatcher Clear: 0s")
+            get() = ScreenRenderer.fontRenderer.getStringWidth("§aDowntime Users:")
 
         override val toggled: Boolean
             get() = KazzUtils.config.downtime

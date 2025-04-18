@@ -58,11 +58,22 @@ abstract class GuiElement(var name: String, var scale: Float = 1f, var x: Float,
     abstract val height: Int
     abstract val width: Int
     val scaleHeight: Float
-        get() = height * scale
+        get() {
+            if (scale <= MIN_SCALE) {
+                scale = MIN_SCALE  // Prevent shrinking below the minimum scale
+            }
+            return height * scale
+        }
     val scaleWidth: Float
-        get() = width * scale
+        get() {
+            if (scale <= MIN_SCALE) {
+                scale = MIN_SCALE  // Prevent shrinking below the minimum scale
+            }
+            return width * scale
+        }
 
     companion object {
+        const val MIN_SCALE = 0.5F
         val sr = UResolution
         val fr by lazy {
             ScreenRenderer.fontRenderer

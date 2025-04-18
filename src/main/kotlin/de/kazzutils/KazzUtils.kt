@@ -58,7 +58,7 @@ import kotlin.coroutines.CoroutineContext
 
 @Mod(modid = "kazzutils",
     useMetadata = true,
-    version = "0.0.2",
+    version = "0.0.1",
     clientSideOnly = true,
     guiFactory = "de.kazzutils.core.ForgeGuiFactory")
 class KazzUtils {
@@ -104,6 +104,7 @@ class KazzUtils {
     fun onTick(event: TickEvent.ClientTickEvent) {
         if (config.noSelfie && mc.gameSettings.thirdPersonView == 2)
             mc.gameSettings.thirdPersonView = 0
+
         if (event.phase != TickEvent.Phase.START || mc.thePlayer == null) return
         ticks++
 
