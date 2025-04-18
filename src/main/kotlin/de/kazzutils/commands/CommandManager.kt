@@ -22,16 +22,16 @@ class CommandManager {
             function = { args ->
                 val arg = args.firstOrNull()
                 if (arg != null) {
-                    if(arg.contains("gui",false)){
+                    if(arg.contains("gui",true)){
                         displayScreen = ElementaEditingGui()
                         return@registerCommandWithAliases
-                    }else if(arg.contains("hotkeys",false)){
+                    }else if(arg.contains("hotkeys",true)){
                         displayScreen = KeyShortcutsGui()
                         return@registerCommandWithAliases
-                    }else if(arg.contains("help",false)){
+                    }else if(arg.contains("help",true)){
                         printHelp()
                     }else{
-                        ChatUtils.messageToChat("Error: Invalid usage: /kazz <gui|hotkeys>")
+                        ChatUtils.messageToChat("Error: Invalid usage: /kazz <gui|hotkeys|help>")
                     }
                 }
                 if(args.isEmpty()) displayScreen = OptionsGui()
@@ -128,7 +128,8 @@ class CommandManager {
         
         §a/protect <clearall> §7-> §fProtects the item the player holds.
         
-        §a/KazzUtils <hotkeys, gui, help> §7-> §fHotkeys: Opens hotkey menu. 
+        §a/KazzUtils <hotkeys, gui, help> §7-> §
+        fHotkeys: Opens hotkey menu. 
         §f-> Gui: Opens Gui Editor. 
         §f-> Help: Prints this message.
         §7Aliases: §e"kazz", "kazzutils", "kaz", "hs"
@@ -140,11 +141,6 @@ class CommandManager {
         // Send the message to the player's chat
         ChatUtils.messageToChat(ChatComponentText(helpMessage))
     }
-
-
-
-
-
 
     private fun registerCommand(name: String, function: (Array<String>) -> Unit) {
         ClientCommandHandler.instance.registerCommand(SimpleCommand(name, createCommand(function)))
