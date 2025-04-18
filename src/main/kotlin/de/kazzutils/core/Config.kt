@@ -204,6 +204,8 @@ object Config : Vigilant(
     )
     var drinkingSelector = 2
 
+
+
     @Property(
         type = PropertyType.SWITCH,
         name = "Display Gyro area",
@@ -268,6 +270,16 @@ object Config : Vigilant(
         subcategory = "misc"
     )
     var stopEndermanFakeTeleport = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "No Selfie",
+        searchTags = ["front cam","f5","third person"],
+        description = "Removes the Front Camera from F5",
+        category = "Miscellaneous",
+        subcategory = "misc"
+    )
+    var noSelfie = false
 
     @Property(
         type = PropertyType.SWITCH,

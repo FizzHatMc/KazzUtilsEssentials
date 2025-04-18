@@ -102,20 +102,16 @@ class KazzUtils {
     private var ticks = 0L
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun onTick(event: TickEvent.ClientTickEvent) {
+        if (config.noSelfie && mc.gameSettings.thirdPersonView == 2)
+            mc.gameSettings.thirdPersonView = 0
         if (event.phase != TickEvent.Phase.START || mc.thePlayer == null) return
         ticks++
 
         if(ticks % 2 == 0L) {
             NewTabUtils.parseTabEntries()
-
         }//each 1/10th second
         if(ticks % 20 == 0L) {
-
-            //if(config.mining.starCult) StarCultNotif.checkCult()
             Utils.checkSkyblock()
-
-
-
         }//each second
 
         if (displayScreen != null) {
