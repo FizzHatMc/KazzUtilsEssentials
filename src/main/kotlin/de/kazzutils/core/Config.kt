@@ -41,6 +41,9 @@ object Config : Vigilant(
 
         addDependency("gyroColor", "gyroRange")
         addDependency("gyroSize", "gyroRange")
+        addDependency("gyroPhased", "gyroRange")
+        addDependency("gyroFilled", "gyroRange")
+
 
 
     }
@@ -81,7 +84,7 @@ object Config : Vigilant(
         category = "Miscellaneous",
         subcategory = "Animation"
     )
-    var customAnimations = false;
+    var customAnimations = false
 
 
     @Property(
@@ -93,7 +96,7 @@ object Config : Vigilant(
         minF = -1.5f,
         maxF = 1.5f
     )
-    var customSize = 0f;
+    var customSize = 0f
 
     @Property(
         type = PropertyType.SWITCH,
@@ -102,7 +105,7 @@ object Config : Vigilant(
         category = "Miscellaneous",
         subcategory = "Animation"
     )
-    var doesScaleSwing = true;
+    var doesScaleSwing = true
 
     @Property(
         type = PropertyType.DECIMAL_SLIDER,
@@ -113,7 +116,7 @@ object Config : Vigilant(
         minF = -1.5f,
         maxF = 1.5f
     )
-    var customX = 0f;
+    var customX = 0f
 
     @Property(
         type = PropertyType.DECIMAL_SLIDER,
@@ -124,7 +127,7 @@ object Config : Vigilant(
         minF = -1.5f,
         maxF = 1.5f
     )
-    var customY = 0f;
+    var customY = 0f
 
     @Property(
         type = PropertyType.DECIMAL_SLIDER,
@@ -135,7 +138,7 @@ object Config : Vigilant(
         minF = -1.5f,
         maxF = 1.5f
     )
-    var customZ = 0f;
+    var customZ = 0f
 
     @Property(
         type = PropertyType.DECIMAL_SLIDER,
@@ -146,7 +149,7 @@ object Config : Vigilant(
         minF = -180f,
         maxF = 180f
     )
-    var customYaw = 0f;
+    var customYaw = 0f
 
     @Property(
         type = PropertyType.DECIMAL_SLIDER,
@@ -157,7 +160,7 @@ object Config : Vigilant(
         minF = -180f,
         maxF = 180f
     )
-    var customPitch = 0f;
+    var customPitch = 0f
 
     @Property(
         type = PropertyType.DECIMAL_SLIDER,
@@ -168,7 +171,7 @@ object Config : Vigilant(
         minF = -180f,
         maxF = 180f
     )
-    var customRoll = 0f;
+    var customRoll = 0f
 
     @Property(
         type = PropertyType.DECIMAL_SLIDER,
@@ -179,7 +182,7 @@ object Config : Vigilant(
         minF = -2f,
         maxF = 1f
     )
-    var customSpeed = 0f;
+    var customSpeed = 0f
 
     @Property(
         type = PropertyType.SWITCH,
@@ -188,7 +191,7 @@ object Config : Vigilant(
         category = "Miscellaneous",
         subcategory = "Animation"
     )
-    var ignoreHaste = true;
+    var ignoreHaste = true
 
     @Property(
         type = PropertyType.SLIDER,
@@ -247,6 +250,24 @@ object Config : Vigilant(
         subcategory = "Item"
     )
     var gyroPhased = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Enable Fruit Digging helper",
+        description = "Helps with Fruit Digging",
+        category = "Event",
+        subcategory = "Carnival"
+    )
+    var minesweeper = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Stop Enderman Fake teleportation",
+        description = "Stops Enderman from fake teleportation.",
+        category = "Miscellaneous",
+        subcategory = "misc"
+    )
+    var stopEndermanFakeTeleport = false
 
     @Property(
         type = PropertyType.SWITCH,

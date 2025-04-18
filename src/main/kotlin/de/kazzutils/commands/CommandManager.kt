@@ -1,17 +1,11 @@
 package de.kazzutils.commands
 
-
-import de.kazzutils.KazzUtils
 import de.kazzutils.KazzUtils.Companion.displayScreen
-import de.kazzutils.KazzUtils.Companion.mc
 import de.kazzutils.commands.SimpleCommand.ProcessCommandRunnable
-import de.kazzutils.core.Config
-
+import de.kazzutils.data.enumClass.PetRarity
 import de.kazzutils.gui.KeyShortcutsGui
 import de.kazzutils.gui.OptionsGui
 import de.kazzutils.gui.editing.ElementaEditingGui
-import de.kazzutils.utils.Utils.openGUI
-import de.kazzutils.utils.chat.RequiredPetXp
 import de.kazzutils.utils.randomutils.ChatUtils
 import net.minecraft.command.ICommandSender
 import net.minecraft.util.BlockPos
@@ -22,76 +16,82 @@ class CommandManager {
 
     init {
 
-        registerCommand("Test") {ChatUtils.messageToChat("Test")}
-
-        registerCommand("kazzutils") {
-            ChatUtils.messageToChat("Kazzutils command")
-            displayScreen = OptionsGui()
-            return@registerCommand
-
-        }
-        registerCommand("kazz"){ args ->
-            val arg = args.firstOrNull()
-            if (arg != null) {
-                if(arg.contains("gui",false)){
-                    KazzUtils.displayScreen = ElementaEditingGui()
-                    return@registerCommand
-                }else if(arg.contains("hotkeys",false)){
-                    KazzUtils.displayScreen = KeyShortcutsGui()
-                    return@registerCommand
-                }else if(arg.contains("help",false)){
-                    ChatUtils.messageToChat("Possible Options: gui, hotkeys")
-                }else{
-                    ChatUtils.messageToChat("Error: Invalid usage: /kazz <gui|hotkeys>")
+        registerCommandWithAliases(
+            name = "KazzUtils",
+            aliases = listOf("kazz","kazzutils","kaz","hs"),
+            function = { args ->
+                val arg = args.firstOrNull()
+                if (arg != null) {
+                    if(arg.contains("gui",false)){
+                        displayScreen = ElementaEditingGui()
+                        return@registerCommandWithAliases
+                    }else if(arg.contains("hotkeys",false)){
+                        displayScreen = KeyShortcutsGui()
+                        return@registerCommandWithAliases
+                    }else if(arg.contains("help",false)){
+                        printHelp()
+                    }else{
+                        ChatUtils.messageToChat("Error: Invalid usage: /kazz <gui|hotkeys>")
+                    }
+                }
+                if(args.isEmpty()) displayScreen = OptionsGui()
+            },
+            autoComplete = { args ->
+                when (args.size) {
+                    1 -> listOf("gui","hotkeys","help")
+                    else -> emptyList()
+                }
+            }
+        )
+        registerCommand0(
+            name = "calcpet",
+            function = { args ->
+                if (args.isEmpty()) {
+                    ChatUtils.messageToChat(ChatComponentText("Usage: /calcpet <rarity> <endLvl> or /calcpet <rarity> <startLvl> <endLvl>"))
+                    return@registerCommand0
                 }
 
+                val rarityInput = args[0]
+                val petRarity = PetRarity.fromInput(rarityInput)
 
+                if (petRarity == null) {
+                    ChatUtils.messageToChat(ChatComponentText("Invalid rarity: $rarityInput"))
+                    return@registerCommand0
+                }
+
+                try {
+                    val xp = when (args.size) {
+                        2 -> {
+                            val endLvl = args[1].toInt()
+                            petRarity.getXpBetweenLevels(0, endLvl)
+                        }
+                        3 -> {
+                            val startLvl = args[1].toInt()
+                            val endLvl = args[2].toInt()
+                            petRarity.getXpBetweenLevels(startLvl, endLvl)
+                        }
+                        else -> {
+                            ChatUtils.messageToChat(ChatComponentText("Invalid usage."))
+                            return@registerCommand0
+                        }
+                    }
+
+                    val label = ChatUtils.addColorCodeReturnComponent("Pet XP Required for ${petRarity.name.lowercase().replaceFirstChar { it.uppercaseChar() }}: ", "aqua")
+                    val value = ChatUtils.addColorCodeReturnComponent(ChatUtils.formatNumber(xp), "gold")
+                    ChatUtils.messageToChat(ChatComponentText(label.unformattedText + value.unformattedText))
+
+                } catch (e: NumberFormatException) {
+                    ChatUtils.messageToChat(ChatComponentText("Level inputs must be numbers."))
+                }
+            },
+            autoComplete = { args ->
+                when (args.size) {
+                    1 -> PetRarity.suggestions()
+                    else -> emptyList()
+                }
             }
-            if(args.isEmpty()) displayScreen = OptionsGui()
-        }
+        )
 
-        //TODO: Learn how to add Forced Args, example: /calcpet rarity (options being leg, epic, rare, uncommon, common) endlvl
-        registerCommand("calcpet"){ args ->
-            val rarity = args.firstOrNull().toString()
-            var rar = ""
-
-            when (rarity) {
-                "leg" -> rar = "Legendary"
-                "com" -> rar = "Common"
-                "uncom" -> rar = "Uncommon"
-                else -> rar = rarity.replace(rarity[0], rarity[0].uppercaseChar())
-            }
-
-            if(args.size == 3) {
-                val startLvl = args[1].toInt()
-                val endLvl = args[2].toInt()
-
-                val reqXp =  RequiredPetXp.getRequiredPetLvl(rar, startLvl, endLvl)
-
-                val test = ChatUtils.addColorCodeReturnComponent("Pet XP Required for $rar: ", "aqua")
-                val test2 = ChatUtils.addColorCodeReturnComponent(ChatUtils.formatNumber(reqXp), "gold")
-                val test3 = ChatComponentText(test.unformattedText + test2.unformattedText)
-
-
-
-                ChatUtils.messageToChat(test3)
-            }else if(args.size == 2){
-                val endLvl = args[1].toInt()
-                val reqXp = RequiredPetXp.getRequiredPetLvl(rar, endLvl)
-
-                val test = ChatUtils.addColorCodeReturnComponent("Pet XP Required for $rar: ", "aqua")
-                val test2 = ChatUtils.addColorCodeReturnComponent(ChatUtils.formatNumber(reqXp), "gold")
-                val test3 = ChatComponentText(test.unformattedText + test2.unformattedText)
-
-
-
-                ChatUtils.messageToChat(test3)
-
-            }
-
-
-            //if(args.isEmpty())KazzUtils.configManager.openConfigGui()
-        }
         /*
         registerCommand("formatmessage") { args ->
             val colorName = args.firstOrNull()
@@ -121,6 +121,29 @@ class CommandManager {
         }*/
     }
 
+    private fun printHelp() {
+        val helpMessage = """
+        §b§lKazzUtils
+        §6Current commands:
+        
+        §a/protect <clearall> §7-> §fProtects the item the player holds.
+        
+        §a/KazzUtils <hotkeys, gui, help> §7-> §fHotkeys: Opens hotkey menu. 
+        §f-> Gui: Opens Gui Editor. 
+        §f-> Help: Prints this message.
+        §7Aliases: §e"kazz", "kazzutils", "kaz", "hs"
+        
+        §a/calcpet <rarity> <endLvl> §7-> §fCalculates the XP needed for the given rarity and end level.
+        §a/calcpet <rarity> <startLvl> <endLvl> §7-> §fCalculates the XP needed for the given rarity, start level, and end level.
+        """.trimIndent()
+
+        // Send the message to the player's chat
+        ChatUtils.messageToChat(ChatComponentText(helpMessage))
+    }
+
+
+
+
 
 
     private fun registerCommand(name: String, function: (Array<String>) -> Unit) {
@@ -143,6 +166,29 @@ class CommandManager {
         )
         ClientCommandHandler.instance.registerCommand(command)
     }
+
+    private fun registerCommandWithAliases(
+        name: String,
+        aliases: List<String> = listOf(),
+        function: (Array<String>) -> Unit,
+        autoComplete: ((Array<String>) -> List<String>) = { listOf() } // Default to no autocomplete
+    ) {
+        // Create the main command
+        val command = SimpleCommand(name, createCommand(function), object : SimpleCommand.TabCompleteRunnable {
+            override fun tabComplete(sender: ICommandSender?, args: Array<String>?, pos: BlockPos?): List<String> {
+                return autoComplete(args ?: emptyArray())
+            }
+        })
+
+        // Register the main command
+        ClientCommandHandler.instance.registerCommand(command)
+
+        // Register the aliases as commands
+        for (alias in aliases) {
+            ClientCommandHandler.instance.registerCommand(SimpleCommand(alias, createCommand(function)))
+        }
+    }
+
 
     private fun createCommand(function: (Array<String>) -> Unit) = object : ProcessCommandRunnable() {
         override fun processCommand(sender: ICommandSender?, args: Array<String>?) {

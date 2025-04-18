@@ -11,19 +11,18 @@ import de.kazzutils.utils.Utils
 import de.kazzutils.utils.colors.CustomColor
 import de.kazzutils.utils.graphics.ScreenRenderer
 import de.kazzutils.core.tickTimer
-import de.kazzutils.data.enumClass.DunClass
 import de.kazzutils.features.chatStuff.ChatCommands
 import de.kazzutils.features.chatfeatures.ChatEmotes
 import de.kazzutils.features.dungeons.gui.DownTimeObject
+import de.kazzutils.features.event.carnival.Minesweeper
 import de.kazzutils.features.misc.KeyShortcuts
+import de.kazzutils.features.misc.MiscStuff
 import de.kazzutils.features.misc.items.GyroRange
 import de.kazzutils.handler.EventHandler
 import de.kazzutils.handler.hook.EntityPlayerSPHook
 import de.kazzutils.handler.transformers.PacketThreadUtilTransformer
 import de.kazzutils.utils.NewTabUtils
 import de.kazzutils.utils.randomutils.ChatUtils
-import de.kazzutils.utils.randomutils.TabUtils
-import de.kazzutils.utils.skyblockfeatures.CatacombsUtils
 import kotlinx.coroutines.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -69,11 +68,12 @@ class KazzUtils {
         CommandManager()
         guiManager = GuiManager
 
-
         reg(ChatCommands())
         reg(ChatEmotes())
         reg(DownTimeObject.DownTimeDisplay())
         reg(GyroRange())
+        reg(MiscStuff())
+        reg(Minesweeper())
 
     }
 
