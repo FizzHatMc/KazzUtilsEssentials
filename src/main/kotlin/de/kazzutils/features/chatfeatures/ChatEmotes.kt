@@ -1,9 +1,11 @@
 package de.kazzutils.features.chatfeatures
 
 import de.kazzutils.KazzUtils
+import de.kazzutils.KazzUtils.Companion.mc
 import de.kazzutils.utils.randomutils.ChatUtils
 import de.kazzutils.utils.randomutils.ChatUtils.getUserMessageFromUnformatedText
 import de.kazzutils.utils.randomutils.ChatUtils.noColorCodes
+import de.kazzutils.utils.randomutils.ChatUtils.parseChatMessage
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.regex.Pattern
@@ -48,23 +50,24 @@ class ChatEmotes {
     fun onChat(event: ClientChatReceivedEvent) {
         if (event.type.toInt() == 2) return
         if (!KazzUtils.config.chatEmotes) return
-        var message = event.message.unformattedText
-        message = getUserMessageFromUnformatedText(message)
+        val message = event.message.unformattedText
+        val test = parseChatMessage(message)
 
-        val reg = "(\\[.+])? ?(.+):"
+        val name = test["name"] ?: return
+        val content = test["content"] ?: return
+
+        if(name.equals(mc.thePlayer.displayName)){
+            ChatUtils.messageToChat("Message sent by User")
+            return
+        }
 
         //TODO: FIX -> MESSAGES ARE SENT FROM OTHER PLAYERS AND NOT JUST THE MOD USER
 
-        if (message.startsWith("/") &&
-            !message.startsWith("/pc") &&
-            !message.startsWith("/ac") &&
-            !message.startsWith("/gc") &&
-            !message.startsWith("/msg") &&
-            !message.startsWith("/w") &&
-            !message.startsWith("/r")) return
+        val filter = listOf("/pc", "/ac", "/gc", "/msg", "/w", "/r")
+        if (content.startsWith("/") && filter.none { content.startsWith(it) }) return
 
         replaced = false
-        val words = message.split(" ").toMutableList()
+        val words = content.split(" ").toMutableList()
 
         for (i in words.indices) {
             if (replacements.containsKey(words[i])) {

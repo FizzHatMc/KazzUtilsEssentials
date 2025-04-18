@@ -18,12 +18,49 @@ object ChatUtils {
     private val manaUseRegex = Regex("""-(\d+) Mana""")
     private val manaRegex = Regex("""(?<num>[0-9,.]+)/(?<den>[0-9,.]+)✎(| Mana| (?<overflow>-?[0-9,.]+)ʬ)""")
     private val skillRegex = Regex("\\+(?<gained>[0-9,.]+) (?<skillName>[A-Za-z]+) (?<progress>\\((((?<current>[0-9.,kM]+)/(?<total>[0-9.,kM]+))|((?<percent>[0-9.,]+)%))\\))")
+    private val messageRegex = Regex("""^(?:\[(\d+)])?\s*(?:\[(MVP\+\+|MVP\+|VIP\+|VIP)])?\s*(\p{So})?\s*([^\s\[\]:]+)\s*(\p{So})?\s*:\s*(.*)$""")
 
     var health: String? = null
     var manaUse: String? = null
     var mana: String = ""
     var skill: String? = null
     var defense: String? = null
+
+    fun parseChatMessage(message: String): Map<String, String?> {
+
+
+        val match = messageRegex.matchEntire(message)
+
+        return if (match != null && match.groupValues.size >= 6) {
+            val level = match.groupValues.getOrNull(1)?.takeIf { it.isNotEmpty() }
+            val rank = match.groupValues.getOrNull(2)?.takeIf { it.isNotEmpty() }
+            val faction = match.groupValues.getOrNull(3)?.takeIf { it.isNotEmpty() }
+            val name = match.groupValues.getOrNull(4)?.takeIf { it.isNotEmpty() }
+            val profileType = match.groupValues.getOrNull(5)?.takeIf { it.isNotEmpty() }
+            val content = match.groupValues.getOrNull(6)?.takeIf { it.isNotEmpty() }
+
+            mapOf(
+                "level" to level,
+                "rank" to rank,
+                "name" to name,
+                "faction" to faction,
+                "profiletype" to profileType,
+                "content" to content
+            )
+        } else {
+            mapOf(
+                "level" to null,
+                "rank" to null,
+                "name" to null,
+                "faction" to null,
+                "profiletype" to null,
+                "content" to null
+            )
+        }
+    }
+
+
+
 
     fun getUserMessageFromUnformatedText(message: String): String {
         val regex = "(?<=: ).*"

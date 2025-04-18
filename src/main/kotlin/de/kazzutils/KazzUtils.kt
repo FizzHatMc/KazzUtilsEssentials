@@ -1,6 +1,4 @@
 package de.kazzutils
-
-
 import de.kazzutils.commands.CommandManager
 import de.kazzutils.core.Config
 import de.kazzutils.core.GuiManager

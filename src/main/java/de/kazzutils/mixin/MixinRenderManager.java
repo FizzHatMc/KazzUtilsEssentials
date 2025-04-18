@@ -17,7 +17,7 @@ public class MixinRenderManager {
         if (new CheckRenderEntityEvent<>(entity, camera, camX, camY, camZ).postAndCatch()) {
             cir.setReturnValue(false);
         }else{
-            System.out.println("Failed to check render entity");
+            //System.out.println("Failed to check render entity");
         }
     }
 }
