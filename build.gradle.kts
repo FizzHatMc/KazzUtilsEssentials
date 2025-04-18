@@ -179,10 +179,10 @@ tasks.shadowJar {
     // If you want to include other dependencies and shadow them, you can relocate them in here
     fun relocate(name: String) = relocate(name, "$baseGroup.deps.$name")
 
-    relocate("gg.essential.elementa", "de.kazz.elementa")
+    //relocate("gg.essential.elementa", "de.kazz.elementa")
     // elementa dependencies
-    relocate("gg.essential.universalcraft", "de.kazz.universalcraft")
-    relocate("gg.essential.universal", "de.kazz.universal")
+    //relocate("gg.essential.universalcraft", "de.kazz.universalcraft")
+    //relocate("gg.essential.universal", "de.kazz.universal")
 }
 
 tasks.assemble.get().dependsOn(tasks.remapJar)
