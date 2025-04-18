@@ -17,6 +17,6 @@ object MuseumStrategy : ItemProtectStrategy() {
         return false
     }
 
-    override val isToggled: Boolean //TODO: Change Config
-        get() = KazzUtils.config.test
+    override val isToggled: Boolean
+        get() = KazzUtils.config.protectItems
 }

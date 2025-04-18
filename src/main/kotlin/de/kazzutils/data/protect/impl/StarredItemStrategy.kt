@@ -19,6 +19,6 @@ object StarredItemStrategy : ItemProtectStrategy() {
         }
     }
 
-    override val isToggled: Boolean //TODO: Config
-        get() = KazzUtils.config.test
+    override val isToggled: Boolean
+        get() = KazzUtils.config.protectItems
 }

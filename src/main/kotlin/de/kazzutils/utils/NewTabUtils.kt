@@ -24,7 +24,66 @@ object NewTabUtils {
     private var p: PlayerInfoOrdering = PlayerInfoOrdering()
     var area: String = ""
 
+    fun parseTabEntries() {
+        if (mc.thePlayer == null) return
+        if (mc.theWorld == null) return
 
+        val scoreboardList = mapNotNull(fetchTabEntries())
+
+        for (line in scoreboardList) {
+            trim = line!!.trim { it <= ' ' }
+            val matcher = areaPattern.matcher(trim)
+            if (matcher.find()) {
+                area = matcher.group(1)
+            }
+
+            val classMap = mapOf(
+                "(Archer" to "Archer",
+                "(Tank" to "Tank",
+                "(Mage" to "Mage",
+                "(Healer" to "Healer",
+                "(Berserk" to "Berserk"
+            )
+
+            when{
+                trim.contains("Dungeon: Catacombs") -> {
+                    area = "Catacombs"
+                }
+
+                /*
+                TODO -> Garden ill skip for now add later
+                trim.contains("Garden Level:") -> {
+                    val lvlAndPercent = trim.split(':')[1]
+                    val lvl = lvlAndPercent.split("(")[0].trim()
+                    val hasPercent = lvlAndPercent.contains("(")
+                    val percent = if(hasPercent) lvlAndPercent.trim().substring(1,lvlAndPercent.length-2) else "N/A"
+                    val lvlAsInt = lvl.getNumber() ?: run {
+                        if(!lvl.contains("XV")){
+                            gardenLevel = NumberUtils.toInteger(lvl)
+                            gardenPercent = trim.substring(trim.indexOf("(") + 1, trim.indexOf(")") - 1).toDouble()
+                        }else{
+                            gardenLevel = NumberUtils.toInteger("XV")
+                        }
+                    }
+
+
+                    ChatUtils.messageToChat("Split: $lvlAndPercent | $lvl | $percent")
+                }
+                 */
+
+
+                classMap.keys.any { line.contains(it) } -> {
+                    val roleKey = classMap.keys.firstOrNull { line.contains(it) }
+                    val playerName = line.split(" ").getOrNull(1)
+                    if (roleKey != null && playerName != null && playerName.contains(mc.thePlayer.name)) {
+                        ChatUtils.messageToChat("Users Dungeon class -> ${classMap[roleKey]}")
+                        playerClass = classMap[roleKey] ?: ""
+                    }
+                }
+            }
+
+        }
+    }
 
     @SideOnly(Side.CLIENT)
     class PlayerInfoOrdering : Ordering<NetworkPlayerInfo?>() {
@@ -72,67 +131,6 @@ object NewTabUtils {
             }
             .filter { displayName: String? -> displayName != null }
             .collect(Collectors.toList())
-    }
-
-    fun parseTabEntries() {
-        if (mc.thePlayer == null) return
-        if (mc.theWorld == null) return
-
-        val scoreboardList = mapNotNull(fetchTabEntries())
-
-        for (line in scoreboardList) {
-            trim = line!!.trim { it <= ' ' }
-            val matcher = areaPattern.matcher(trim)
-            if (matcher.find()) {
-                area = matcher.group(1)
-            }
-
-            when{
-                trim.contains("Dungeon: Catacombs") -> {
-                    area = "Catacombs"
-                }
-
-                trim.contains("Garden Level:") -> {
-                    val lvlAndPercent = trim.split(':')[1]
-                    val lvl = lvlAndPercent.split("(")[0].trim()
-                    val hasPercent = lvlAndPercent.contains("(")
-                    val percent = if(hasPercent) lvlAndPercent.trim().substring(1,lvlAndPercent.length-2) else "N/A"
-                    val lvlAsInt = lvl.getNumber() ?: run {
-                        if(!lvl.contains("XV")){
-                            gardenLevel = NumberUtils.toInteger(lvl)
-                            gardenPercent = trim.substring(trim.indexOf("(") + 1, trim.indexOf(")") - 1).toDouble()
-                        }else{
-                            gardenLevel = NumberUtils.toInteger("XV")
-                        }
-                    }
-
-
-                    ChatUtils.messageToChat("Split: $lvlAndPercent | $lvl | $percent")
-                }
-
-                line.contains("(Archer") -> {
-                    val archerName = line.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
-                    if (archerName.contains(mc.thePlayer.name)) playerClass = "Archer"
-                }
-                line.contains("(Tank") -> {
-                    val tankName = line.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
-                    if (tankName.contains(mc.thePlayer.name)) playerClass = "Tank"
-                }
-                line.contains("(Mage") -> {
-                    val mageName = line.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
-                    if (mageName.contains(mc.thePlayer.name)) playerClass = "Mage"
-                }
-                line.contains("(Healer") -> {
-                    val healerName = line.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
-                    if (healerName.contains(mc.thePlayer.name)) playerClass = "Healer"
-                }
-                line.contains("(Berserk") -> {
-                    val berserkerName = line.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
-                    if (berserkerName.contains(mc.thePlayer.name)) playerClass = "Berserk"
-                }
-            }
-
-        }
     }
 
 

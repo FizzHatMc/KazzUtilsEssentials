@@ -11,13 +11,17 @@ import de.kazzutils.utils.Utils
 import de.kazzutils.utils.colors.CustomColor
 import de.kazzutils.utils.graphics.ScreenRenderer
 import de.kazzutils.core.tickTimer
+import de.kazzutils.data.enumClass.DunClass
 import de.kazzutils.features.chatStuff.ChatCommands
 import de.kazzutils.features.chatfeatures.ChatEmotes
 import de.kazzutils.features.misc.KeyShortcuts
 import de.kazzutils.handler.EventHandler
 import de.kazzutils.handler.hook.EntityPlayerSPHook
 import de.kazzutils.handler.transformers.PacketThreadUtilTransformer
+import de.kazzutils.utils.NewTabUtils
 import de.kazzutils.utils.randomutils.ChatUtils
+import de.kazzutils.utils.randomutils.TabUtils
+import de.kazzutils.utils.skyblockfeatures.CatacombsUtils
 import kotlinx.coroutines.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -91,10 +95,24 @@ class KazzUtils {
         ScreenRenderer.init()
     }
 
-
+    private var ticks = 0L
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun onTick(event: TickEvent.ClientTickEvent) {
-        if (event.phase != TickEvent.Phase.START) return
+        if (event.phase != TickEvent.Phase.START || mc.thePlayer == null) return
+        ticks++
+
+        if(ticks % 2 == 0L) {
+            NewTabUtils.parseTabEntries()
+
+        }//each 1/10th second
+        if(ticks % 20 == 0L) {
+
+            //if(config.mining.starCult) StarCultNotif.checkCult()
+            Utils.checkSkyblock()
+
+
+
+        }//each second
 
         if (displayScreen != null) {
             if (mc.thePlayer?.openContainer == mc.thePlayer?.inventoryContainer) {

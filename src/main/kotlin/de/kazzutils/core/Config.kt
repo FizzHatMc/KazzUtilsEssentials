@@ -41,12 +41,12 @@ object Config : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
-        name = "Useless Switch",
-        description = "Test",
-        category = "General",
-        subcategory = "Test"
+        name = "Protect Items",
+        description = "Protects Items, add Item with /protectitem",
+        category = "Miscellaneous",
+        subcategory = "Item"
     )
-    var test = true
+    var protectItems = true
 
     @Property(
         type = PropertyType.SWITCH,
