@@ -36,6 +36,8 @@ object Config : Vigilant(
         addDependency("drinkingSelector", "customAnimations")
 
         addDependency("partyPrefix", "partyCommands")
+        addDependency("downtime", "partyCommands")
+
 
     }
 
@@ -217,12 +219,24 @@ object Config : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Downtime Display",
+        description = "Displays if a user needs Downtime, USAGE: {prefix}dt",
+        category = "Chat Features",
+        subcategory = "Party Commands"
+    )
+    var downtime = true
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Enable Chat Emotes",
         description = "Enables MVP++ Emotes for People with MVP++.",
         category = "Chat Features",
         subcategory = "General"
     )
     var chatEmotes = false
+
+
+
 
 
 }

@@ -14,6 +14,7 @@ import de.kazzutils.core.tickTimer
 import de.kazzutils.data.enumClass.DunClass
 import de.kazzutils.features.chatStuff.ChatCommands
 import de.kazzutils.features.chatfeatures.ChatEmotes
+import de.kazzutils.features.dungeons.gui.DownTimeObject
 import de.kazzutils.features.misc.KeyShortcuts
 import de.kazzutils.handler.EventHandler
 import de.kazzutils.handler.hook.EntityPlayerSPHook
@@ -70,6 +71,7 @@ class KazzUtils {
 
         reg(ChatCommands())
         reg(ChatEmotes())
+        reg(DownTimeObject.DownTimeDisplay())
 
     }
 

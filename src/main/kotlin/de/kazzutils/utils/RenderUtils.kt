@@ -2,6 +2,11 @@ package de.kazzutils.utils
 
 import de.kazzutils.KazzUtils
 import de.kazzutils.KazzUtils.Companion.mc
+import de.kazzutils.core.structure.GuiElement
+import de.kazzutils.utils.colors.CommonColors
+import de.kazzutils.utils.graphics.ScreenRenderer
+import de.kazzutils.utils.graphics.SmartFontRenderer
+import gg.essential.universal.UResolution
 import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.RenderGlobal
@@ -19,6 +24,23 @@ import kotlin.math.sqrt
 object RenderUtils {
 
     private val beaconBeam = ResourceLocation("textures/entity/beacon_beam.png")
+
+    fun drawAllInList(element: GuiElement, lines: Collection<String>) {
+        val leftAlign = element.scaleX < UResolution.scaledWidth / 2f
+        val alignment =
+            if (leftAlign) SmartFontRenderer.TextAlignment.LEFT_RIGHT else SmartFontRenderer.TextAlignment.RIGHT_LEFT
+        val xPos = if (leftAlign) 0f else element.width.toFloat()
+        for ((i, str) in lines.withIndex()) {
+            ScreenRenderer.fontRenderer.drawString(
+                str,
+                xPos,
+                (i * ScreenRenderer.fontRenderer.FONT_HEIGHT).toFloat(),
+                CommonColors.WHITE,
+                alignment,
+                element.textShadow
+            )
+        }
+    }
 
     fun drawCustomBox(
         x: Double,

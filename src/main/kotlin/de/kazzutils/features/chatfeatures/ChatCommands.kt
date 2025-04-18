@@ -1,6 +1,7 @@
 package de.kazzutils.features.chatStuff
 
 import de.kazzutils.KazzUtils
+import de.kazzutils.features.dungeons.gui.DownTimeObject
 import de.kazzutils.utils.randomutils.ChatUtils
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -81,13 +82,14 @@ class ChatCommands {
             when (command) {
                 "help" -> {
                     ChatUtils.userMessage("Chat Commands: ")
-                    ChatUtils.userMessage("help, ptme, warp, inv / invite, f{floor}, m{floor} , allinv/invite, dt")
+                    ChatUtils.userMessage("help, ptme, warp, inv / invite, f{floor}, m{floor} , allinv/invite, dt/downtime, ndt/r/done")
                 }
                 "ptme" -> ChatUtils.userMessage("/party transfer $sender")
                 "warp" -> ChatUtils.userMessage("/party warp")
                 "inv", "invite" -> ChatUtils.userMessage("/party invite ${matcher.group(4)}")
                 "allinvite", "allinv" -> ChatUtils.userMessage("/party setting allinvite")
-                "dt", "downtime" -> ChatUtils.messageToChat("IMPLEMENT UI! : DT for ->  $sender")
+                "dt", "downtime" -> DownTimeObject.addUser(sender)
+                "ndt", "r", "done" -> DownTimeObject.removeUser(sender)
             }
         }
     }
