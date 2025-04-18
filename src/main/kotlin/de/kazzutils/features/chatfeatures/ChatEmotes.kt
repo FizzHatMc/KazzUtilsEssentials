@@ -61,8 +61,6 @@ class ChatEmotes {
             return
         }
 
-        //TODO: FIX -> MESSAGES ARE SENT FROM OTHER PLAYERS AND NOT JUST THE MOD USER
-
         val filter = listOf("/pc", "/ac", "/gc", "/msg", "/w", "/r")
         if (content.startsWith("/") && filter.none { content.startsWith(it) }) return
 
