@@ -629,6 +629,69 @@ object RenderUtils {
         GlStateManager.popMatrix()
     }
 
+    fun drawCircle(
+        pos: Vec3,
+        radius: Float,
+        thickness: Float,
+        slices: Int,
+        rot1: Float,
+        rot2: Float,
+        rot3: Float,
+        r: Float,
+        g: Float,
+        b: Float,
+        a: Float,
+        phase: Boolean,
+        filled: Boolean
+    ) {
+        val renderPos = getRenderPos(pos)
+        val x = renderPos.xCoord.toFloat()
+        val y = renderPos.yCoord.toFloat()
+        val z = renderPos.zCoord.toFloat()
+
+        GlStateManager.pushMatrix()
+        GlStateManager.disableCull()
+        GlStateManager.enableBlend()
+        GlStateManager.disableLighting()
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+        GlStateManager.depthMask(false)
+        GlStateManager.disableTexture2D()
+        if (phase) GlStateManager.disableDepth()
+
+        GlStateManager.color(r, g, b, a)
+        GlStateManager.translate(x, y, z)
+        GlStateManager.rotate(rot1, 1f, 0f, 0f)
+        GlStateManager.rotate(rot2, 0f, 0f, 1f)
+        GlStateManager.rotate(rot3, 0f, 1f, 0f)
+
+        val mode = if (filled) GL11.GL_TRIANGLE_FAN else GL11.GL_LINE_LOOP
+
+        if (!filled) {
+            GL11.glLineWidth(thickness) // <--- set your desired thickness here
+        }
+
+        GL11.glBegin(mode)
+
+        for (i in 0..slices) {
+            val angle = (i * 2.0 * Math.PI / slices).toFloat()
+            val dx = (cos(angle.toDouble()) * radius).toFloat()
+            val dz = (sin(angle.toDouble()) * radius).toFloat()
+            GL11.glVertex3f(dx, 0f, dz)
+        }
+
+        GL11.glEnd()
+
+        if (phase) GlStateManager.enableDepth()
+        GlStateManager.enableCull()
+        GlStateManager.disableBlend()
+        GlStateManager.enableLighting()
+        GlStateManager.depthMask(true)
+        GlStateManager.enableTexture2D()
+        GlStateManager.popMatrix()
+    }
+
+
+
 
     fun drawTitle(title: String, subtitle: String, color: EnumChatFormatting){
         KazzUtils.Companion.mc.ingameGUI.displayTitle(color.toString() + title, color.toString()+subtitle, 0,3,0)

@@ -7,6 +7,7 @@ import java.io.File
 import gg.essential.vigilance.data.Category
 import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
+import java.awt.Color
 
 object Config : Vigilant(
     File("./config/KazzUtils/config.toml"),
@@ -37,6 +38,9 @@ object Config : Vigilant(
 
         addDependency("partyPrefix", "partyCommands")
         addDependency("downtime", "partyCommands")
+
+        addDependency("gyroColor", "gyroRange")
+        addDependency("gyroSize", "gyroRange")
 
 
     }
@@ -199,6 +203,53 @@ object Config : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Display Gyro area",
+        description = "Displays a Circle where the Gyro will trigger.",
+        category = "Miscellaneous",
+        subcategory = "Item"
+    )
+    var gyroRange = false
+
+    @Property(
+        type = PropertyType.COLOR,
+        name = "Gyro area Color",
+        description = "Changes the Color of the Gyro Range.",
+        category = "Miscellaneous",
+        subcategory = "Item"
+    )
+    var gyroColor = Color(0,0,0,0)
+
+    @Property(
+        type = PropertyType.DECIMAL_SLIDER,
+        name = "Gyro area Size",
+        description = "Changes the size of the Gyro Range.",
+        category = "Miscellaneous",
+        subcategory = "Item",
+        minF = 0f,
+        maxF = 10f
+    )
+    var gyroSize = 1F
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Gyro range filled",
+        description = "Fills the Gyro Range",
+        category = "Miscellaneous",
+        subcategory = "Item"
+    )
+    var gyroFilled = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Gyro range Phase",
+        description = "Gyro range phase through Walls / TEST",
+        category = "Miscellaneous",
+        subcategory = "Item"
+    )
+    var gyroPhased = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Enable Party Commands",
         description = "Enable Party Commands",
         category = "Chat Features",
@@ -234,6 +285,8 @@ object Config : Vigilant(
         subcategory = "General"
     )
     var chatEmotes = false
+
+
 
 
 

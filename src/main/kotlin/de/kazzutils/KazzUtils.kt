@@ -16,6 +16,7 @@ import de.kazzutils.features.chatStuff.ChatCommands
 import de.kazzutils.features.chatfeatures.ChatEmotes
 import de.kazzutils.features.dungeons.gui.DownTimeObject
 import de.kazzutils.features.misc.KeyShortcuts
+import de.kazzutils.features.misc.items.GyroRange
 import de.kazzutils.handler.EventHandler
 import de.kazzutils.handler.hook.EntityPlayerSPHook
 import de.kazzutils.handler.transformers.PacketThreadUtilTransformer
@@ -72,6 +73,7 @@ class KazzUtils {
         reg(ChatCommands())
         reg(ChatEmotes())
         reg(DownTimeObject.DownTimeDisplay())
+        reg(GyroRange())
 
     }
 
