@@ -1,4 +1,16 @@
 package de.kazzutils
+
+
+import HypixelAPI
+import javax.net.ssl.TrustManagerFactory
+import javax.net.ssl.X509TrustManager
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.cache.*
+import io.ktor.client.plugins.compression.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.http.*
 import de.kazzutils.commands.CommandManager
 import de.kazzutils.core.Config
 import de.kazzutils.core.GuiManager
@@ -21,8 +33,11 @@ import de.kazzutils.features.misc.items.GyroRange
 import de.kazzutils.handler.EventHandler
 import de.kazzutils.handler.hook.EntityPlayerSPHook
 import de.kazzutils.handler.transformers.PacketThreadUtilTransformer
+import de.kazzutils.utils.BrotliEncoder
 import de.kazzutils.utils.NewTabUtils
+import de.kazzutils.utils.UnionX509TrustManager
 import de.kazzutils.utils.randomutils.ChatUtils
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -51,6 +66,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 import net.minecraftforge.fml.common.network.FMLNetworkEvent
 import java.io.File
+import java.security.KeyStore
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.ThreadPoolExecutor
@@ -97,6 +113,7 @@ class KazzUtils {
     fun postInit(event: FMLPostInitializationEvent) {
         PersistentSave.loadData()
         ScreenRenderer.init()
+        HypixelAPI.initialize(API_KEY)
     }
 
     private var ticks = 0L
@@ -196,6 +213,7 @@ class KazzUtils {
     companion object : CoroutineScope {
         const val MOD_ID = "kazzutils"
         const val VERSION = "0.0.2"
+        const val API_KEY = "94ce5984-d4d7-4436-97c3-ffee67af8d34"
 
         @JvmStatic
         val mc: Minecraft by lazy {
@@ -248,6 +266,8 @@ class KazzUtils {
                 contextual(UUID::class, UUIDAsString)
             }
         }
+
+
     }
 
     private fun reg(obj: Any){
