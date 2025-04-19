@@ -33,9 +33,7 @@ import de.kazzutils.features.misc.items.GyroRange
 import de.kazzutils.handler.EventHandler
 import de.kazzutils.handler.hook.EntityPlayerSPHook
 import de.kazzutils.handler.transformers.PacketThreadUtilTransformer
-import de.kazzutils.utils.BrotliEncoder
 import de.kazzutils.utils.NewTabUtils
-import de.kazzutils.utils.UnionX509TrustManager
 import de.kazzutils.utils.randomutils.ChatUtils
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.*
