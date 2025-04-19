@@ -9,6 +9,7 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.serialization") version "1.9.22"
     //id("gg.essential.defaults") //version "0.3.0"
+    id("net.kyori.blossom") version "2.1.0"
 }
 
 //Constants:
@@ -74,6 +75,7 @@ repositories {
     maven("https://repo.essential.gg/repository/maven-public")
 
     maven("https://repo.essential.gg/repository/maven-releases/")
+    maven ("https://repo.hypixel.net/repository/Hypixel/")
 }
 
 val shadowImpl: Configuration by configurations.creating {
@@ -97,14 +99,62 @@ dependencies {
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.2.1")
     implementation(kotlin("stdlib-jdk8"))
 
+
     implementation("gg.essential:vigilance:306")
     implementation("gg.essential:elementa:704")
 
     implementation("gg.essential:universalcraft-$mcVersion-forge:401") //Forge 1.8.9
     //implementation("gg.essential:universalcraft-1.20.1-forge:401")
 
+    // Ktor client dependencies
+    implementation("io.ktor:ktor-client-core:2.1.0")
+    implementation("io.ktor:ktor-client-cio:2.1.0")  // For making requests
+    implementation("io.ktor:ktor-client-serialization:2.1.0")  // For serialization (json parsing)
+    implementation("io.ktor:ktor-client-json:2.1.0")  // JSON feature
+
+    // Kotlin Serialization (ensure you have the correct version of this)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+
+
+
+    shadowImpl(platform(kotlin("bom")))
+
+    shadowImpl(platform(ktor("bom", "2.3.12", addSuffix = false)))
 
     shadowImpl(kotlin("stdlib-jdk8"))
+
+    shadowImpl(ktorClient("core"))
+    shadowImpl(ktorClient("cio"))
+    shadowImpl(ktorClient("content-negotiation"))
+    shadowImpl(ktorClient("encoding"))
+
+    shadowImpl(ktorServer("core"))
+    shadowImpl(ktorServer("cio"))
+    shadowImpl(ktorServer("content-negotiation"))
+    shadowImpl(ktorServer("compression"))
+    shadowImpl(ktorServer("cors"))
+    shadowImpl(ktorServer("conditional-headers"))
+    shadowImpl(ktorServer("auto-head-response"))
+    shadowImpl(ktorServer("default-headers"))
+    shadowImpl(ktorServer("host-common"))
+    shadowImpl(ktorServer("auth"))
+
+    shadowImpl(ktor("serialization-kotlinx-json"))
+    compileOnly("net.hypixel:mod-api-forge:1.0.1.2") {
+        exclude(group = "me.djtheredstoner", module = "DevAuth-forge-legacy")
+    }
+
+    shadowImpl("org.brotli:dec:0.1.2")
+    shadowImpl("com.aayushatharva.brotli4j:brotli4j:1.18.0")
+
+    shadowImpl("org.jetbrains.kotlinx:kotlinx-serialization-json") {
+        version {
+            strictly("[1.5.1,)")
+            prefer("1.6.2")
+        }
+    }
+
+    shadowImpl("net.hypixel:mod-api-forge-tweaker:1.0.1.2")
 
     shadowImpl("io.github.llamalad7:mixinextras-common:0.5.0-beta.4")
 
@@ -186,4 +236,11 @@ tasks.shadowJar {
 }
 
 tasks.assemble.get().dependsOn(tasks.remapJar)
+
+fun DependencyHandler.ktor(module: String, version: String? = null, addSuffix: Boolean = true) =
+    "io.ktor:ktor-$module${if (addSuffix) "-jvm" else ""}${version?.let { ":$version" } ?: ""}"
+
+fun DependencyHandler.ktorClient(module: String, version: String? = null) = ktor("client-${module}", version)
+
+fun DependencyHandler.ktorServer(module: String, version: String? = null) = ktor("server-${module}", version)
 
