@@ -1,14 +1,13 @@
 package de.kazzutils.features.chatfeatures
 
-import de.kazzutils.KazzUtils
-import de.kazzutils.KazzUtils.Companion.mc
-import de.kazzutils.utils.randomutils.ChatUtils
-import de.kazzutils.utils.randomutils.ChatUtils.getUserMessageFromUnformatedText
-import de.kazzutils.utils.randomutils.ChatUtils.noColorCodes
-import de.kazzutils.utils.randomutils.ChatUtils.parseChatMessage
-import net.minecraftforge.client.event.ClientChatReceivedEvent
+import de.kazzutils.handler.ChatHandler
+import net.minecraft.client.gui.GuiChat
+import net.minecraft.client.gui.GuiTextField
+import net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import java.util.regex.Pattern
+import org.lwjgl.input.Keyboard
+import java.lang.reflect.Field
+
 
 //TODO: Doesnt wOrk
 class ChatEmotes {
@@ -44,9 +43,36 @@ class ChatEmotes {
         ":skull:" to "☠"
     )
 
-    var replaced = false
 
     @SubscribeEvent
+    fun onGuiInput(event: KeyboardInputEvent) {
+        if (event.gui is GuiChat && Keyboard.getEventKeyState() && event.isCancelable)
+            if (runReplacement(event.gui as GuiChat)){
+                event.isCanceled = true
+            }
+    }
+
+    private fun runReplacement(chat: GuiChat) : Boolean{
+        val inputField: Field = GuiChat::class.java.getDeclaredField("inputField")
+        inputField.isAccessible = true // Make protected field accessible
+        val textField = inputField.get(chat) as GuiTextField
+
+        val msg = textField.text
+        val cursor: Int = textField.cursorPosition
+        val word = ChatHandler.getWord(msg,cursor)
+        if(replacements.containsKey(word)){
+            ChatHandler.replaceWord(textField, replacements[word]!!)
+            return true
+
+        }
+        return false
+    }
+
+}
+
+
+/*
+@SubscribeEvent
     fun onChat(event: ClientChatReceivedEvent) {
         if (event.type.toInt() == 2) return
         if (!KazzUtils.config.chatEmotes) return
@@ -84,8 +110,4 @@ class ChatEmotes {
 
 
     }
-
-
-
-
-}
+ */
