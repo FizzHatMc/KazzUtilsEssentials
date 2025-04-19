@@ -74,7 +74,7 @@ object ChatUtils {
         mc.thePlayer.addChatMessage(ChatComponentText(EnumChatFormatting.RED.toString()+message))
     }
 
-    fun getColorCode(colorName: String): String? {
+    private fun getColorCode(colorName: String): String? {
         return when (colorName.lowercase()) {
             "black" -> "§0"
             "dark_blue" -> "§1"

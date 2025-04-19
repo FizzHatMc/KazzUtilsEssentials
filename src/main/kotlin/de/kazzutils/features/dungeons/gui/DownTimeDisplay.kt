@@ -40,6 +40,7 @@ object DownTimeObject{
 
     class DownTimeDisplay : GuiElement("DownTime Display",x=200,y=80){
         override fun render() {
+            if(dtNames.isEmpty()) return
             var displayText = """
                 §aDowntime:
                 """.trimIndent()

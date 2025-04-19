@@ -8,8 +8,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.lwjgl.input.Keyboard
 import java.lang.reflect.Field
 
-
-//TODO: Doesnt wOrk
 class ChatEmotes {
     val replacements = mapOf(
         "<3" to "❤",
