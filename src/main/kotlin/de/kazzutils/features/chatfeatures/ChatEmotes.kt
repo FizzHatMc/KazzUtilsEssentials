@@ -51,18 +51,22 @@ class ChatEmotes {
     }
 
     private fun runReplacement(chat: GuiChat) : Boolean{
-        val inputField: Field = GuiChat::class.java.getDeclaredField("inputField")
-        inputField.isAccessible = true // Make protected field accessible
-        val textField = inputField.get(chat) as GuiTextField
+        try {
+            val inputField : GuiTextField = chat.inputField
 
-        val msg = textField.text
-        val cursor: Int = textField.cursorPosition
-        val word = ChatHandler.getWord(msg,cursor)
-        if(replacements.containsKey(word)){
-            ChatHandler.replaceWord(textField, replacements[word]!!)
-            return true
 
+            val msg = inputField.text
+            val cursor: Int = inputField.cursorPosition
+            val word = ChatHandler.getWord(msg,cursor)
+            if(replacements.containsKey(word)){
+                ChatHandler.replaceWord(inputField, replacements[word]!!)
+                return true
+
+            }
+        }catch (e:Exception){
+            println ("Caught exception. ${e.message}")
         }
+
         return false
     }
 

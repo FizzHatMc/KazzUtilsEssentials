@@ -173,6 +173,14 @@ dependencies {
 
 // Tasks:
 
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    dependsOn(tasks.processResources) // Ensure resources are processed (AT applied) before Kotlin compilation
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+
 tasks.withType(JavaCompile::class) {
     options.encoding = "UTF-8"
 }

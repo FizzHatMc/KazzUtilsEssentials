@@ -10,7 +10,7 @@ import gg.essential.vigilance.data.PropertyType
 import java.awt.Color
 
 object Config : Vigilant(
-    File("./config/KazzUtils/config.toml"),
+    File("./config/KazzUtils/config.json"),
     "KazzUtils (Essentials Edition)" + " (${KazzUtils.version})",
     sortingBehavior = ConfigSorting
 ) {

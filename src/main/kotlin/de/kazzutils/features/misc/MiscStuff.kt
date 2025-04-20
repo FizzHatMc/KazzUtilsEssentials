@@ -13,7 +13,6 @@ class MiscStuff {
 
     @SubscribeEvent
     fun onEndermanTeleport(event: EnderTeleportEvent){
-        ChatUtils.messageToChat("Test Teleport")
         if(KazzUtils.config.stopEndermanFakeTeleport) event.isCanceled = true
     }
 
