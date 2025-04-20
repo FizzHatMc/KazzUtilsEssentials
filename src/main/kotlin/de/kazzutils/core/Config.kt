@@ -15,8 +15,13 @@ object Config : Vigilant(
     sortingBehavior = ConfigSorting
 ) {
 
-    init {
+    fun init(){
         initialize()
+        markDirty()
+        loadData()
+    }
+
+    init {
         // First Field = Option that is Hidden
         // Second Field = Condition Field
         // Not option Names but Variable Names
