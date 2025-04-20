@@ -10,18 +10,13 @@ import gg.essential.vigilance.data.PropertyType
 import java.awt.Color
 
 object Config : Vigilant(
-    File("./config/KazzUtils/config.json"),
+    File("./config/KazzUtils/config.toml"),
     "KazzUtils (Essentials Edition)" + " (${KazzUtils.version})",
     sortingBehavior = ConfigSorting
 ) {
 
-    fun init(){
-        initialize()
-        markDirty()
-        loadData()
-    }
-
     init {
+        initialize()
         // First Field = Option that is Hidden
         // Second Field = Condition Field
         // Not option Names but Variable Names
@@ -49,7 +44,7 @@ object Config : Vigilant(
         addDependency("gyroPhased", "gyroRange")
         addDependency("gyroFilled", "gyroRange")
 
-
+        markDirty()
 
     }
 

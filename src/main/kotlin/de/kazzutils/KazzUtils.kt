@@ -13,6 +13,7 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.http.*
 import de.kazzutils.commands.CommandManager
 import de.kazzutils.core.Config
+import de.kazzutils.core.Config.loadData
 import de.kazzutils.core.GuiManager
 import de.kazzutils.core.PersistentSave
 import de.kazzutils.gui.OptionsGui
@@ -93,7 +94,6 @@ class KazzUtils {
 
     @Mod.EventHandler
     fun init(event: FMLInitializationEvent?) {
-        config.initialize()
         arrayOf(
             this,
             guiManager,
@@ -111,6 +111,7 @@ class KazzUtils {
     fun postInit(event: FMLPostInitializationEvent) {
         PersistentSave.loadData()
         ScreenRenderer.init()
+        config.loadData()
         HypixelAPI.initialize(API_KEY)
     }
 
@@ -128,6 +129,8 @@ class KazzUtils {
         }//each 1/10th second
         if(ticks % 20 == 0L) {
             Utils.checkSkyblock()
+            config.writeData()
+
         }//each second
 
         if (displayScreen != null) {
@@ -223,7 +226,7 @@ class KazzUtils {
         }
 
         val modDir by lazy {
-            File(File(mc.mcDataDir, "config"), "kazzutils").also {
+            File(File(mc.mcDataDir, "config"), "KazzUtils").also {
                 it.mkdirs()
                 File(it, "trackers").mkdirs()
             }
