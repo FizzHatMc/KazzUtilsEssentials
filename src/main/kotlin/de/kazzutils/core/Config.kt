@@ -319,6 +319,15 @@ object Config : Vigilant(
     )
     var chatEmotes = false
 
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Mines of Divan Tools warning",
+        description = "Sends a Warning if 4/4 Tools have been found in the Mines of Divan.",
+        category = "Mining",
+        subcategory = "Crystal Hollows"
+    )
+    var modTools = false
+
 
 
 

@@ -9,7 +9,7 @@ import org.lwjgl.input.Keyboard
 import java.lang.reflect.Field
 
 class ChatEmotes {
-    val replacements = mapOf(
+    private val replacements = mapOf(
         "<3" to "❤",
         "o/" to "( ﾟ◡ﾟ)/",
         ":star:" to "✮",
@@ -59,7 +59,7 @@ class ChatEmotes {
             val cursor: Int = inputField.cursorPosition
             val word = ChatHandler.getWord(msg,cursor)
             if(replacements.containsKey(word)){
-                ChatHandler.replaceWord(inputField, replacements[word]!!)
+                replacements[word]?.let { ChatHandler.replaceWord(inputField, it) }
                 return true
 
             }

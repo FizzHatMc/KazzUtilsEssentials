@@ -28,6 +28,7 @@ import de.kazzutils.features.chatStuff.ChatCommands
 import de.kazzutils.features.chatfeatures.ChatEmotes
 import de.kazzutils.features.dungeons.gui.DownTimeObject
 import de.kazzutils.features.event.carnival.Minesweeper
+import de.kazzutils.features.mining.crystalhollows.ModToolsWarner
 import de.kazzutils.features.misc.KeyShortcuts
 import de.kazzutils.features.misc.MiscStuff
 import de.kazzutils.features.misc.items.GyroRange
@@ -89,6 +90,7 @@ class KazzUtils {
         reg(GyroRange())
         reg(MiscStuff())
         reg(Minesweeper())
+        reg(ModToolsWarner.ModToolsDisplay())
 
     }
 
@@ -103,6 +105,7 @@ class KazzUtils {
             PacketThreadUtilTransformer,
             EventHandler,
             ChatUtils,
+            ModToolsWarner
 
         ).forEach(MinecraftForge.EVENT_BUS::register)
     }
