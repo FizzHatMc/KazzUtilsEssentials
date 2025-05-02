@@ -37,6 +37,7 @@ object ModToolsWarner {
 
     class ModToolsDisplay: GuiElement("Mines of Divan Tools",x=400,y=80){
         override fun render() {
+            if(!KazzUtils.config.modTools) return
             var displayText = """
                 §4 Tools: ${amountOfTools}/4:
                 """.trimIndent()

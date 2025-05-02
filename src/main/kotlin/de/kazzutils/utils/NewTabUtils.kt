@@ -76,7 +76,7 @@ object NewTabUtils {
                     val roleKey = classMap.keys.firstOrNull { line.contains(it) }
                     val playerName = line.split(" ").getOrNull(1)
                     if (roleKey != null && playerName != null && playerName.contains(mc.thePlayer.name)) {
-                        ChatUtils.messageToChat("Users Dungeon class -> ${classMap[roleKey]}")
+                        //ChatUtils.messageToChat("Users Dungeon class -> ${classMap[roleKey]}")
                         playerClass = classMap[roleKey] ?: ""
                     }
                 }

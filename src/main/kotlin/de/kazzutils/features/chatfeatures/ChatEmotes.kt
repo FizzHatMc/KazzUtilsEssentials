@@ -45,6 +45,7 @@ class ChatEmotes {
     @SubscribeEvent
     fun onGuiInput(event: KeyboardInputEvent) {
         if (event.gui is GuiChat && Keyboard.getEventKeyState() && event.isCancelable)
+
             if (runReplacement(event.gui as GuiChat)){
                 event.isCanceled = true
             }

@@ -9,14 +9,19 @@ object ChatHandler {
     }
 
     fun replaceWord(field: GuiTextField, replacement: String): Boolean {
-        val input = field.text
-        val cursor = field.cursorPosition
-        val start = getStartOfWord(input, cursor)
-        val end = getEndOfWord(input, cursor)
-        val output = input.substring(0, start) + replacement + input.substring(end)
-        if (output.length > field.maxStringLength) return false
-        field.text = output
-        return true
+        try {
+            val input = field.text
+            val cursor = field.cursorPosition
+            val start = getStartOfWord(input, cursor)
+            val end = getEndOfWord(input, cursor)
+            val output = (input.substring(0, start) + replacement + input.substring(end)) ?: return false
+            if (output.length > field.maxStringLength) return false
+            field.text = output
+            return true
+        }catch (e: Exception){
+            return false
+        }
+
     }
 
     private fun getStartOfWord(input: String, cursor: Int): Int {
