@@ -2,9 +2,11 @@ package de.kazzutils.utils.skyblockfeatures
 
 import de.kazzutils.KazzUtils.Companion.mc
 import de.kazzutils.data.enumClass.WitherKingDragons
+import de.kazzutils.event.DungeonBossRoomEnterEvent
 import de.kazzutils.handler.ScoreboardHandler
 
 import de.kazzutils.utils.chat.ChatUtils
+import de.kazzutils.utils.randomutils.StringUtils.removeColor
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiPlayerTabOverlay
 import net.minecraft.init.Blocks
@@ -22,6 +24,7 @@ class CatacombsUtils {
     companion object {
         var inM7: Boolean = false
         var floor: String = "n"
+        var inBossRoom = false
 
         fun inDungeon() : Boolean {
             val scoreboard: List<String> = ScoreboardHandler.getSidebarLines()
@@ -45,6 +48,37 @@ class CatacombsUtils {
             }
         }
 
+        fun handleBossMessage(rawMessage: String) {
+            if (!inDungeon()) return
+
+            val message = rawMessage.removeColor()
+            val bossName = message.substringAfter("[BOSS] ").substringBefore(":").trim()
+
+            if ((bossName != "The Watcher") && floor != "n" && checkBossName(bossName) && !inBossRoom) {
+                DungeonBossRoomEnterEvent.postAndCatch() //IMPORTANT -> Triggers DungeonBossRoomEnterEvent for other classes
+                inBossRoom = true
+            }else{
+                inBossRoom = false
+            }
+        }
+
+        private fun checkBossName(bossName: String): Boolean {
+            val correctBoss = when (floor) {
+                "E" -> "The Watcher"
+                "F1", "M1" -> "Bonzo"
+                "F2", "M2" -> "Scarf"
+                "F3", "M3" -> "The Professor"
+                "F4", "M4" -> "Thorn"
+                "F5", "M5" -> "Livid"
+                "F6", "M6" -> "Sadan"
+                "F7", "M7" -> "Maxor"
+                else -> null
+            } ?: return false
+
+            // Livid has a prefix in front of the name, so we check ends with to cover all the livids
+            return bossName.endsWith(correctBoss)
+        }
+
     }
 
     val red: Array<BlockPos> = arrayOf(BlockPos(27, 14, 58), BlockPos(40, 20, 45))
@@ -58,6 +92,8 @@ class CatacombsUtils {
     private fun stripColorCodes(string: String): String {
         return string.replace("§.".toRegex(), "")
     }
+
+
 
 
     fun getLines(): List<String> {

@@ -9,6 +9,7 @@ import de.kazzutils.core.PersistentSave
 import de.kazzutils.core.tickTimer
 import de.kazzutils.features.chatStuff.ChatCommands
 import de.kazzutils.features.chatfeatures.ChatEmotes
+import de.kazzutils.features.dungeons.DungeonFeatures
 import de.kazzutils.features.dungeons.gui.DownTimeObject
 import de.kazzutils.features.dungeons.render.HighlightHealerRoute
 import de.kazzutils.features.event.carnival.Minesweeper
@@ -84,6 +85,7 @@ class KazzUtils {
         reg(Minesweeper())
         reg(ModToolsWarner.ModToolsDisplay())
         reg(HighlightHealerRoute())
+        reg(DungeonFeatures())
 
     }
 

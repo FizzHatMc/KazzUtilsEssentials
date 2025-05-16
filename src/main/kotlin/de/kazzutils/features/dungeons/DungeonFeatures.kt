@@ -1,13 +1,16 @@
 package de.kazzutils.features.dungeons
 
+import de.kazzutils.KazzUtils
+import de.kazzutils.utils.skyblockfeatures.CatacombsUtils
+import net.minecraftforge.client.event.ClientChatReceivedEvent
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+
 class DungeonFeatures {
 
-    var dungeonFloor: String? = null
-        set(value) {
-            field = value
-            dungeonFloorNumber = value?.drop(1)?.ifEmpty { "0" }?.toIntOrNull()
-        }
-    var dungeonFloorNumber: Int? = null
-        private set
+    @SubscribeEvent
+    fun onChat(event: ClientChatReceivedEvent){
+        if (event.type.toInt() == 2) return
+        CatacombsUtils.handleBossMessage(event.message.unformattedText)
 
+    }
 }

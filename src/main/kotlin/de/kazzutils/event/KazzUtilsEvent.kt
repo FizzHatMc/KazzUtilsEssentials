@@ -19,4 +19,6 @@ abstract class KazzUtilsEvent : Event() {
             UChat.chat("§cKazzUtilsV2 ${KazzUtils.version} caught and logged an ${it::class.simpleName ?: "error"} at ${eventName}.")
         }.getOrDefault(isCanceled)
     }
+
+
 }

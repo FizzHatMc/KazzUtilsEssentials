@@ -126,10 +126,9 @@ object ChatUtils {
         mana = manaRegex.find(text)?.groupValues?.let { Pair(it[1], it[2]) }.toString()
         skill =  skillRegex.find(text)?.groupValues?.let { "+${it[1]} ${it[2]} ${it[3]}" }
 
-
-
-
     }
+
+
 
 
 

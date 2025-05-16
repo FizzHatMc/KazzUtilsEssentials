@@ -22,7 +22,7 @@ object ModToolsWarner {
 
     @SubscribeEvent
     fun onChat(event: ClientChatReceivedEvent) {
-        if (event.type.toInt() != 2 || !KazzUtils.config.modTools) return
+        if (event.type.toInt() == 2 || !KazzUtils.config.modTools) return
         var msg = event.message.unformattedTextForChat
 
 
