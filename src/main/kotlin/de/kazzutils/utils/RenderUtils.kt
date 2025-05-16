@@ -471,9 +471,7 @@ object RenderUtils {
 
         GlStateManager.pushMatrix()
         GlStateManager.translate(-realX, -realY, -realZ)
-        GlStateManager.disableLighting()
         GlStateManager.disableTexture2D()
-        GlStateManager.enableBlend()
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0)
         GL11.glLineWidth(2f)
 
@@ -484,10 +482,8 @@ object RenderUtils {
         wr.pos(pos1.xCoord, pos1.yCoord, pos1.zCoord).color(red, green, blue, alpha).endVertex()
         wr.pos(pos2.xCoord, pos2.yCoord, pos2.zCoord).color(red, green, blue, alpha).endVertex()
         tes.draw()
-        GlStateManager.disableBlend()
         GlStateManager.popMatrix()
         GlStateManager.enableTexture2D()
-        GlStateManager.enableLighting()
     }
 
     fun renderBoxOutline(
@@ -503,7 +499,7 @@ object RenderUtils {
         val tessellator = Tessellator.getInstance()
         val worldrenderer = tessellator.worldRenderer
 
-        val player: Entity = KazzUtils.Companion.mc.renderViewEntity
+        val player: Entity = mc.renderViewEntity
         val playerX = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks
         val playerY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks
         val playerZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks

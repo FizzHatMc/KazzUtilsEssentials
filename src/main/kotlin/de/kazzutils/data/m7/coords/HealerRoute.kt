@@ -64,6 +64,19 @@ object HealerRoute {
             BlockPos(94,118,70) to BlockPos(94,120,83),
             BlockPos(94,120,83) to BlockPos(96,121,100),
             BlockPos(96,121,100) to BlockPos(96,120,121),
+            BlockPos(96,120,121) to BlockPos(96,113,133),
+            BlockPos(96,113,133) to BlockPos(66,106,134),
+            BlockPos(66,106,134) to BlockPos(64,129,135),
+            BlockPos(64,129,135) to BlockPos(61,131,140),
+            BlockPos(61,131,140) to BlockPos(52,131,138),
+            BlockPos(52,131,138) to BlockPos(36,130,138),
+            BlockPos(36,130,138) to BlockPos(22,130,137),
+            BlockPos(22,130,137) to BlockPos(19,129,136),
+            BlockPos(19,129,136) to BlockPos(7,114,123),
+            BlockPos(7,114,123) to BlockPos(7,112,103),
+            BlockPos(7,112,103) to BlockPos(7,112,85),
+            BlockPos(7,112,85) to BlockPos(7,106,81),
+            BlockPos(7,106,81) to BlockPos(3,119,78),
         )
     }
 }
