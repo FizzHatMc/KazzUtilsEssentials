@@ -10,6 +10,7 @@ import de.kazzutils.core.tickTimer
 import de.kazzutils.features.chatStuff.ChatCommands
 import de.kazzutils.features.chatfeatures.ChatEmotes
 import de.kazzutils.features.dungeons.gui.DownTimeObject
+import de.kazzutils.features.dungeons.render.HighlightHealerRoute
 import de.kazzutils.features.event.carnival.Minesweeper
 import de.kazzutils.features.mining.crystalhollows.ModToolsWarner
 import de.kazzutils.features.misc.KeyShortcuts
@@ -24,6 +25,7 @@ import de.kazzutils.handler.transformers.PacketThreadUtilTransformer
 import de.kazzutils.transformers.AccessorGuiStreamUnavailable
 import de.kazzutils.transformers.AccessorSettingsGui
 import de.kazzutils.utils.NewTabUtils
+import de.kazzutils.utils.SimpleRender
 import de.kazzutils.utils.Utils
 import de.kazzutils.utils.chat.ChatUtils
 import de.kazzutils.utils.colors.CustomColor
@@ -80,6 +82,7 @@ class KazzUtils {
         reg(MiscStuff())
         reg(Minesweeper())
         reg(ModToolsWarner.ModToolsDisplay())
+        reg(HighlightHealerRoute())
 
     }
 

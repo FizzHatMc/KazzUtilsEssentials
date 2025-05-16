@@ -694,10 +694,10 @@ object RenderUtils {
 
 
     fun drawTitle(title: String, subtitle: String, color: EnumChatFormatting){
-        KazzUtils.Companion.mc.ingameGUI.displayTitle(color.toString() + title, color.toString()+subtitle, 0,3,0)
+        mc.ingameGUI.displayTitle(color.toString() + title, color.toString()+subtitle, 0,3,0)
     }
     fun drawTitle(title: String, color: EnumChatFormatting){
-        KazzUtils.Companion.mc.ingameGUI.displayTitle(color.toString() + title, "", 0,3,0)
+        mc.ingameGUI.displayTitle(color.toString() + title, "", 0,3,0)
     }
 
 
