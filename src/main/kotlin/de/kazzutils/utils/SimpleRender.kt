@@ -24,6 +24,8 @@ object SimpleRender {
 
     }
 
+    //TODO: Add Beacon and Text
+
     /**
      * Highlights a [blockPos] in Game.
      * @param[blockPos] Highlight this Block
@@ -48,7 +50,7 @@ object SimpleRender {
         val pos = getblockPos(blockPos, event)
 
         highlightBlock(blockPos, color, event)
-        RenderUtils.drawCustomBox(pos.x.toDouble(),1.0,pos.y+1.0,2.0,pos.z.toDouble(),1.0,color,3f, true)
+        RenderUtils.drawCustomBox(pos.x.toDouble(),1.0,pos.y+1.0,1.0,pos.z.toDouble(),1.0,color,3f, true)
     }
 
 
@@ -79,6 +81,16 @@ object SimpleRender {
     }
 
     /**
+     * Highlights a list of [BlockPos] in Game.
+     * @param[blocksColors] Map of <BlockPos, Color>, Each Block needs a Color to be rendered in
+     * @param[event] RenderWorldLastEven > for partialTicks
+     * @return N/A.
+     */
+    fun highlightBlockListColors(blocksColors: Map<BlockPos, Color>, event: RenderWorldLastEvent) {
+        blocksColors.forEach { block, color -> highlightBlock(block,color,event) }
+    }
+
+    /**
      * Highlights a list of [BlockPos] and Renders a Beacon in Game.
      * @param[blockPos] List of BlockPos
      * @param[color] Choose a Color
@@ -105,7 +117,7 @@ object SimpleRender {
 
 
 
-    
+
 
 
 }
