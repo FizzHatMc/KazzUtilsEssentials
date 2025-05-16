@@ -30,6 +30,7 @@ import de.kazzutils.utils.Utils
 import de.kazzutils.utils.chat.ChatUtils
 import de.kazzutils.utils.colors.CustomColor
 import de.kazzutils.utils.graphics.ScreenRenderer
+import de.kazzutils.utils.skyblockfeatures.CatacombsUtils
 import kotlinx.coroutines.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -126,6 +127,7 @@ class KazzUtils {
         if(ticks % 20 == 0L) {
             Utils.checkSkyblock()
             config.writeData()
+            //CatacombsUtils.checkCata()
 
         }//each second
 

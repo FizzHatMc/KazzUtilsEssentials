@@ -3,6 +3,7 @@ package de.kazzutils.utils
 import de.kazzutils.KazzUtils.Companion.mc
 import net.minecraft.entity.Entity
 import net.minecraft.util.BlockPos
+import net.minecraft.util.Vec3
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import java.awt.Color
 import kotlin.collections.forEach
@@ -34,10 +35,10 @@ object SimpleRender {
      * @return N/A.
      */
     fun highlightBlock(blockPos: BlockPos, color: Color, event: RenderWorldLastEvent) {
-       val pos = getblockPos(blockPos, event)
-
-        RenderUtils.drawCustomBox(pos.x.toDouble(),1.0,pos.y+1.0,2.0,pos.z.toDouble(),1.0,color,3f, true)
+        RenderUtils.drawCustomBox(blockPos.x.toDouble(),1.0,blockPos.y.toDouble()+1.0,1.0,blockPos.z.toDouble(),1.0,color,3f, true)
     }
+
+
 
     /**
      * Highlights a [blockPos] and Renders a Beacon in Game.
@@ -50,9 +51,17 @@ object SimpleRender {
         val pos = getblockPos(blockPos, event)
 
         highlightBlock(blockPos, color, event)
-        RenderUtils.drawCustomBox(pos.x.toDouble(),1.0,pos.y+1.0,1.0,pos.z.toDouble(),1.0,color,3f, true)
+        RenderUtils.renderBeaconBeam(pos.x.toDouble(),pos.y.toDouble(),pos.z.toDouble(),color.rgb,1.0f,event.partialTicks)
     }
 
+    fun renderLine(pos1: BlockPos, pos2: BlockPos, color: Color, event: RenderWorldLastEvent) {
+        RenderUtils.drawLine(
+            Vec3(pos1.x.toDouble() + 0.5, pos1.y.toDouble() + 1.5, pos1.z.toDouble() + 0.5),
+            Vec3(pos2.x.toDouble() + 0.5, pos2.y.toDouble() + 1.5, pos2.z.toDouble() + 0.5),
+            color,
+            event.partialTicks
+        )
+    }
 
     /**
      * Highlights a [blockPos] and Renders a Tag in Game.
@@ -113,6 +122,12 @@ object SimpleRender {
     fun highlightBlockListWithTagList(blockAndNames : Map<BlockPos,String>, color: Color, event: RenderWorldLastEvent, scale: Float) {
         blockAndNames.forEach { block, string ->  highlightBlockWithTag(block,color,string,scale,event) }
     }
+
+
+    fun renderLinesList(linePos: Map<BlockPos, BlockPos>, color: Color,event: RenderWorldLastEvent) {
+        linePos.forEach { pos1,pos2 -> renderLine(pos1,pos2,color,event) }
+    }
+
 
 
 

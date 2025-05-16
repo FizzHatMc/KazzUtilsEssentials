@@ -16,6 +16,9 @@ object NewTabUtils {
     private var trim: String = ""
     private var p: PlayerInfoOrdering = PlayerInfoOrdering()
     var area: String = ""
+    var playerClass: String = ""
+
+
 
     fun parseTabEntries() {
         if (mc.thePlayer == null) return

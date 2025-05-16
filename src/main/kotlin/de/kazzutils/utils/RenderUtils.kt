@@ -458,7 +458,7 @@ object RenderUtils {
     }
 
     fun drawLine(pos1: Vec3, pos2: Vec3, color: Color, partialTicks: Float) {
-        val render: Entity = KazzUtils.Companion.mc.renderViewEntity
+        val render: Entity = mc.renderViewEntity
         val realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * partialTicks
         val realY = render.lastTickPosY + (render.posY - render.lastTickPosY) * partialTicks
         val realZ = render.lastTickPosZ + (render.posZ - render.lastTickPosZ) * partialTicks
