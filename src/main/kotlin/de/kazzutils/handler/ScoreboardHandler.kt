@@ -1,62 +1,53 @@
-package de.kazzutils.handler;
+package de.kazzutils.handler
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import net.minecraft.client.Minecraft;
-import net.minecraft.scoreboard.Score;
-import net.minecraft.scoreboard.ScoreObjective;
-import net.minecraft.scoreboard.ScorePlayerTeam;
-import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.util.StringUtils;
+import com.google.common.collect.Iterables
+import com.google.common.collect.Lists
+import net.minecraft.client.Minecraft
+import net.minecraft.scoreboard.Score
+import net.minecraft.scoreboard.ScoreObjective
+import net.minecraft.scoreboard.ScorePlayerTeam
+import net.minecraft.scoreboard.Scoreboard
+import net.minecraft.util.StringUtils
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
+object ScoreboardHandler {
 
-public class ScoreboardHandler {
+    fun cleanSB(scoreboard: String): String {
+        val nvString = StringUtils.stripControlCodes(scoreboard).toCharArray()
+        val cleaned = StringBuilder()
 
-
-    public static String cleanSB(String scoreboard) {
-        char[] nvString = StringUtils.stripControlCodes(scoreboard).toCharArray();
-        StringBuilder cleaned = new StringBuilder();
-
-        for (char c : nvString) {
-            if ((int) c > 20 && (int) c < 127) {
-                cleaned.append(c);
+        for (c in nvString) {
+            if (c.code in 21..126) {
+                cleaned.append(c)
             }
         }
 
-        return cleaned.toString();
+        return cleaned.toString()
     }
 
-    public static List<String> getSidebarLines() {
-        List<String> lines = new ArrayList<>();
-        if (Minecraft.getMinecraft().theWorld == null) return lines;
-        Scoreboard scoreboard = Minecraft.getMinecraft().theWorld.getScoreboard();
-        if (scoreboard == null) return lines;
+    fun getSidebarLines(): List<String> {
+        val lines = mutableListOf<String>()
+        val mc = Minecraft.getMinecraft()
+        val world = mc.theWorld ?: return lines
+        val scoreboard = world.scoreboard ?: return lines
 
-        ScoreObjective objective = scoreboard.getObjectiveInDisplaySlot(1);
-        if (objective == null) return lines;
+        val objective = scoreboard.getObjectiveInDisplaySlot(1) ?: return lines
 
-        Collection<Score> scores = scoreboard.getSortedScores(objective);
-        List<Score> list = scores.stream()
-                .filter(input -> input != null && input.getPlayerName() != null && !input.getPlayerName()
-                        .startsWith("#"))
-                .collect(Collectors.toList());
+        var scores: Collection<Score> = scoreboard.getSortedScores(objective)
+        val list = scores.filter {
+            it != null && it.playerName != null && !it.playerName.startsWith("#")
+        }
 
-        if (list.size() > 15) {
-            scores = Lists.newArrayList(Iterables.skip(list, scores.size() - 15));
+        scores = if (list.size > 15) {
+            Lists.newArrayList(Iterables.skip(list, list.size - 15))
         } else {
-            scores = list;
+            list
         }
 
-        for (Score score : scores) {
-            ScorePlayerTeam team = scoreboard.getPlayersTeam(score.getPlayerName());
-            lines.add(ScorePlayerTeam.formatPlayerName(team, score.getPlayerName()));
+        for (score in scores) {
+            val team = scoreboard.getPlayersTeam(score.playerName)
+            lines.add(ScorePlayerTeam.formatPlayerName(team, score.playerName))
         }
 
-        return lines;
+        return lines
     }
-
 }

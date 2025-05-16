@@ -127,7 +127,8 @@ class KazzUtils {
         if(ticks % 20 == 0L) {
             Utils.checkSkyblock()
             config.writeData()
-            //CatacombsUtils.checkCata()
+            CatacombsUtils.checkCata()
+
 
         }//each second
 
