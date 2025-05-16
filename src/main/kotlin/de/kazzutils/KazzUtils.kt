@@ -14,6 +14,7 @@ import de.kazzutils.features.event.carnival.Minesweeper
 import de.kazzutils.features.mining.crystalhollows.ModToolsWarner
 import de.kazzutils.features.misc.KeyShortcuts
 import de.kazzutils.features.misc.MiscStuff
+import de.kazzutils.features.misc.MiscUI
 import de.kazzutils.features.misc.items.GyroRange
 import de.kazzutils.gui.OptionsGui
 import de.kazzutils.gui.ReopenableGUI
@@ -93,7 +94,8 @@ class KazzUtils {
             PacketThreadUtilTransformer,
             EventHandler,
             ChatUtils,
-            ModToolsWarner
+            ModToolsWarner,
+            MiscUI
 
         ).forEach(MinecraftForge.EVENT_BUS::register)
     }

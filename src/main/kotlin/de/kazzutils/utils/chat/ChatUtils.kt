@@ -131,19 +131,7 @@ object ChatUtils {
 
     }
 
-    /*
-    TODO: New Config + Move somewhere else. This is not a ChatUtility
-    @SubscribeEvent
-    fun onRenderGameOverlayEvent(event: RenderGameOverlayEvent.Pre){
-        val conf = KazzUtils.config.misc.hud
-        if(conf.hideArmor && event.type ==  RenderGameOverlayEvent.ElementType.ARMOR) event.isCanceled = true
-        if(conf.hideHP && event.type ==  RenderGameOverlayEvent.ElementType.HEALTH) event.isCanceled = true
-        if(conf.hideFood && event.type ==  RenderGameOverlayEvent.ElementType.FOOD) event.isCanceled = true
 
-
-    }
-
-     */
 
 
 }

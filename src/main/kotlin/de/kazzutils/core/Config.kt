@@ -337,6 +337,33 @@ object Config : Vigilant(
     )
     var modTools = false
 
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Hide Vanilla Health",
+        description = "Hides the Vanilla Health icons",
+        category = "Miscellaneous",
+        subcategory = "Hud"
+    )
+    var hideHP = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Hide Vanilla Armor",
+        description = "Hides the Armor icons",
+        category = "Miscellaneous",
+        subcategory = "Hud"
+    )
+    var hideArmor = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Hide Vanilla Food",
+        description = "Hides the Food icons",
+        category = "Miscellaneous",
+        subcategory = "Hud"
+    )
+    var hideFood = false
+
 
 
 
