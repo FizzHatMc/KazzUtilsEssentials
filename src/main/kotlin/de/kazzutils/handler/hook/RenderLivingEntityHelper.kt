@@ -3,7 +3,6 @@ package de.kazzutils.handler.hook
 import de.kazzutils.event.WorldChangeEvent
 import net.minecraft.entity.EntityLivingBase
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import org.spongepowered.asm.mixin.Mixin
 
 
 class RenderLivingEntityHelper{

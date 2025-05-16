@@ -1,13 +1,13 @@
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
-import org.apache.logging.log4j.LogManager
-import org.apache.logging.log4j.Logger
-import java.util.concurrent.Executors
 import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
 object HypixelAPI {

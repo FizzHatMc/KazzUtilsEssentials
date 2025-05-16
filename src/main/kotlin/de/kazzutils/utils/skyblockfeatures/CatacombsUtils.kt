@@ -4,7 +4,7 @@ import de.kazzutils.KazzUtils.Companion.mc
 import de.kazzutils.data.enumClass.WitherKingDragons
 import de.kazzutils.handler.ScoreboardHandler
 
-import de.kazzutils.utils.randomutils.ChatUtils
+import de.kazzutils.utils.chat.ChatUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiPlayerTabOverlay
 import net.minecraft.init.Blocks

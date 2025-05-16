@@ -3,15 +3,8 @@ package de.kazzutils.utils
 import com.google.common.collect.ComparisonChain
 import com.google.common.collect.Ordering
 import de.kazzutils.KazzUtils.Companion.mc
-import de.kazzutils.utils.randomutils.ChatUtils
-import de.kazzutils.utils.randomutils.NumberUtils
-import de.kazzutils.utils.randomutils.NumberUtils.getNumber
-import de.kazzutils.utils.randomutils.TabUtils.PlayerInfoOrdering
-import de.kazzutils.utils.randomutils.TabUtils.gardenLevel
-import de.kazzutils.utils.randomutils.TabUtils.gardenPercent
 import de.kazzutils.utils.randomutils.TabUtils.playerClass
 import net.minecraft.client.network.NetworkPlayerInfo
-import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.WorldSettings.GameType
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly

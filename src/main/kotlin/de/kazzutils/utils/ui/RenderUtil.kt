@@ -1,9 +1,6 @@
 package de.kazzutils.utils.ui
 
 import de.kazzutils.KazzUtils.Companion.mc
-import de.kazzutils.utils.colors.CommonColors
-import de.kazzutils.utils.graphics.ScreenRenderer
-import de.kazzutils.utils.graphics.SmartFontRenderer
 import gg.essential.elementa.font.DefaultFonts
 import gg.essential.elementa.font.ElementaFonts
 import gg.essential.elementa.utils.withAlpha

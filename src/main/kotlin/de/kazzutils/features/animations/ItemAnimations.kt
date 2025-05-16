@@ -1,6 +1,5 @@
 package de.kazzutils.features.animations
 
-import de.kazzutils.KazzUtils
 import de.kazzutils.KazzUtils.Companion.config
 import de.kazzutils.KazzUtils.Companion.mc
 import net.minecraft.client.entity.AbstractClientPlayer

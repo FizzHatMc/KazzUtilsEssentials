@@ -7,8 +7,8 @@ import de.kazzutils.utils.colors.CustomColor
 import de.kazzutils.utils.colors.CyclingTwoColorGradient
 import de.kazzutils.utils.colors.RainbowColor
 import gg.essential.vigilance.Vigilant
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import net.minecraft.client.settings.GameSettings
 import java.awt.Color
 import java.io.File

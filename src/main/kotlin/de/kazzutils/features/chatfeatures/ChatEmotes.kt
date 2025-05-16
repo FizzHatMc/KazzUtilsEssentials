@@ -6,11 +6,10 @@ import net.minecraft.client.gui.GuiTextField
 import net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.lwjgl.input.Keyboard
-import java.lang.reflect.Field
 
 class ChatEmotes {
     private val replacements = mapOf(
-        "<3" to "❤",
+        "<3" to "❤ ",
         "o/" to "( ﾟ◡ﾟ)/",
         ":star:" to "✮",
         ":yes:" to "✔",
@@ -45,7 +44,6 @@ class ChatEmotes {
     @SubscribeEvent
     fun onGuiInput(event: KeyboardInputEvent) {
         if (event.gui is GuiChat && Keyboard.getEventKeyState() && event.isCancelable)
-
             if (runReplacement(event.gui as GuiChat)){
                 event.isCanceled = true
             }

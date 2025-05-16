@@ -2,7 +2,7 @@ package de.kazzutils.features.chatStuff
 
 import de.kazzutils.KazzUtils
 import de.kazzutils.features.dungeons.gui.DownTimeObject
-import de.kazzutils.utils.randomutils.ChatUtils
+import de.kazzutils.utils.chat.ChatUtils
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.*

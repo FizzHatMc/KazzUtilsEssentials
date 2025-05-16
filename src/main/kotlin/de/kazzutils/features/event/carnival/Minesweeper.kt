@@ -7,13 +7,13 @@ import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
 import net.minecraft.init.Blocks
 import net.minecraft.util.BlockPos
+import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.World
+import net.minecraftforge.client.event.ClientChatReceivedEvent
+import net.minecraftforge.client.event.MouseEvent
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.lwjgl.opengl.GL11
-import net.minecraft.util.MovingObjectPosition
-import net.minecraftforge.client.event.ClientChatReceivedEvent
-import net.minecraftforge.client.event.MouseEvent
 
 
 class Minesweeper {

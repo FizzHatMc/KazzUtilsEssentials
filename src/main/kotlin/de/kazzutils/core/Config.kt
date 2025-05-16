@@ -2,12 +2,12 @@ package de.kazzutils.core
 
 import de.kazzutils.KazzUtils
 import gg.essential.vigilance.Vigilant
-import gg.essential.vigilance.data.SortingBehavior
-import java.io.File
 import gg.essential.vigilance.data.Category
 import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
+import gg.essential.vigilance.data.SortingBehavior
 import java.awt.Color
+import java.io.File
 
 object Config : Vigilant(
     File("./config/KazzUtils/config.toml"),
@@ -284,9 +284,9 @@ object Config : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Enable Party Commands",
-        description = "Enable Party Commands",
+        description = "Enable Party Commands.",
         category = "Chat Features",
-        subcategory = "Party Commands"
+        subcategory = "Party Features"
     )
     var partyCommands = false
 
@@ -294,12 +294,21 @@ object Config : Vigilant(
     @Property(
         type = PropertyType.SELECTOR,
         name = "Party commands Prefix",
-        description = "Choose what Prefix Party commands should use",
+        description = "Choose what Prefix Party commands should use.",
         category = "Chat Features",
-        subcategory = "Party Commands",
+        subcategory = "Party Features",
         options= ["!",".","?",",","-"]
     )
     var partyPrefix = 1
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Party Finder Features",
+        description = "Global toggle Party Finder Features.",
+        category = "Chat Features",
+        subcategory = "Party Features"
+    )
+    var partyFinder = false
 
     @Property(
         type = PropertyType.SWITCH,

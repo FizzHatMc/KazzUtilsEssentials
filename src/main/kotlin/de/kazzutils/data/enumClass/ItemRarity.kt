@@ -1,6 +1,5 @@
 package de.kazzutils.data.enumClass
 
-import de.kazzutils.data.enumClass.ItemRarity.entries
 import java.awt.Color
 
 enum class ItemRarity(val baseColor: ChatColor, val color: Color = baseColor.color!!) {

@@ -2,27 +2,10 @@ package de.kazzutils
 
 
 import HypixelAPI
-import javax.net.ssl.TrustManagerFactory
-import javax.net.ssl.X509TrustManager
-import io.ktor.client.*
-import io.ktor.client.engine.cio.*
-import io.ktor.client.plugins.*
-import io.ktor.client.plugins.cache.*
-import io.ktor.client.plugins.compression.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.http.*
 import de.kazzutils.commands.CommandManager
 import de.kazzutils.core.Config
-import de.kazzutils.core.Config.loadData
 import de.kazzutils.core.GuiManager
 import de.kazzutils.core.PersistentSave
-import de.kazzutils.gui.OptionsGui
-import de.kazzutils.gui.ReopenableGUI
-import de.kazzutils.transformers.AccessorGuiStreamUnavailable
-import de.kazzutils.transformers.AccessorSettingsGui
-import de.kazzutils.utils.Utils
-import de.kazzutils.utils.colors.CustomColor
-import de.kazzutils.utils.graphics.ScreenRenderer
 import de.kazzutils.core.tickTimer
 import de.kazzutils.features.chatStuff.ChatCommands
 import de.kazzutils.features.chatfeatures.ChatEmotes
@@ -32,12 +15,18 @@ import de.kazzutils.features.mining.crystalhollows.ModToolsWarner
 import de.kazzutils.features.misc.KeyShortcuts
 import de.kazzutils.features.misc.MiscStuff
 import de.kazzutils.features.misc.items.GyroRange
+import de.kazzutils.gui.OptionsGui
+import de.kazzutils.gui.ReopenableGUI
 import de.kazzutils.handler.EventHandler
 import de.kazzutils.handler.hook.EntityPlayerSPHook
 import de.kazzutils.handler.transformers.PacketThreadUtilTransformer
+import de.kazzutils.transformers.AccessorGuiStreamUnavailable
+import de.kazzutils.transformers.AccessorSettingsGui
 import de.kazzutils.utils.NewTabUtils
-import de.kazzutils.utils.randomutils.ChatUtils
-import io.ktor.serialization.kotlinx.json.*
+import de.kazzutils.utils.Utils
+import de.kazzutils.utils.chat.ChatUtils
+import de.kazzutils.utils.colors.CustomColor
+import de.kazzutils.utils.graphics.ScreenRenderer
 import kotlinx.coroutines.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -66,7 +55,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 import net.minecraftforge.fml.common.network.FMLNetworkEvent
 import java.io.File
-import java.security.KeyStore
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.ThreadPoolExecutor

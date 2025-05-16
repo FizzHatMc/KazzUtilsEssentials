@@ -1,14 +1,12 @@
 package de.kazzutils.features.dungeons.gui
 
 import de.kazzutils.KazzUtils
-import de.kazzutils.utils.graphics.ScreenRenderer
 import de.kazzutils.core.structure.GuiElement
 import de.kazzutils.utils.RenderUtils
-import de.kazzutils.utils.randomutils.ChatUtils
-import de.kazzutils.utils.randomutils.ChatUtils.noColorCodes
+import de.kazzutils.utils.chat.ChatUtils
+import de.kazzutils.utils.graphics.ScreenRenderer
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import java.util.regex.Pattern
 
 object DownTimeObject{
     var dtNames : MutableList<String> = mutableListOf()

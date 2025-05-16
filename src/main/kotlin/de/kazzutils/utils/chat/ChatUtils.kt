@@ -1,6 +1,6 @@
-package de.kazzutils.utils.randomutils
+package de.kazzutils.utils.chat
 
-import de.kazzutils.KazzUtils.Companion.mc
+import de.kazzutils.KazzUtils
 import de.kazzutils.utils.Utils.removeMinecraftColorCodes
 import net.minecraft.util.ChatComponentText
 import net.minecraft.util.EnumChatFormatting
@@ -55,23 +55,23 @@ object ChatUtils {
     }
 
     fun messageToChat(message: String) {
-        mc.thePlayer.addChatMessage(ChatComponentText(message))
+        KazzUtils.Companion.mc.thePlayer.addChatMessage(ChatComponentText(message))
     }
 
     fun messageToChat(message: ChatComponentText) {
-        mc.thePlayer.addChatMessage(message)
+        KazzUtils.Companion.mc.thePlayer.addChatMessage(message)
     }
 
     fun messageToChatColored(message: String, color : String) {
-        mc.thePlayer.addChatMessage(ChatComponentText(getColorCode(color) + message))
+        KazzUtils.Companion.mc.thePlayer.addChatMessage(ChatComponentText(getColorCode(color) + message))
     }
 
     fun userMessage(message: String){
-        mc.thePlayer.sendChatMessage(message)
+        KazzUtils.Companion.mc.thePlayer.sendChatMessage(message)
     }
 
     fun error(message: String){
-        mc.thePlayer.addChatMessage(ChatComponentText(EnumChatFormatting.RED.toString()+message))
+        KazzUtils.Companion.mc.thePlayer.addChatMessage(ChatComponentText(EnumChatFormatting.RED.toString() + message))
     }
 
     private fun getColorCode(colorName: String): String? {
@@ -97,7 +97,7 @@ object ChatUtils {
 
     }
 
-    fun addColorCodeReturnComponent(msg: String, color: String) : ChatComponentText{
+    fun addColorCodeReturnComponent(msg: String, color: String) : ChatComponentText {
         return ChatComponentText(getColorCode(color) + msg)
     }
 

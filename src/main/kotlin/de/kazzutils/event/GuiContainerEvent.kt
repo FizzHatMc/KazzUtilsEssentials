@@ -2,7 +2,6 @@ package de.kazzutils.event
 
 
 import de.kazzutils.KazzUtils.Companion.mc
-import de.kazzutils.event.GuiContainerEvent.ClickType.entries
 import net.minecraft.client.gui.inventory.GuiChest
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.inventory.Container

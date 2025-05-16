@@ -1,16 +1,13 @@
 package de.kazzutils.commands
 
-import com.google.gson.Gson
+import HypixelAPI
 import de.kazzutils.KazzUtils.Companion.displayScreen
 import de.kazzutils.commands.SimpleCommand.ProcessCommandRunnable
 import de.kazzutils.data.enumClass.PetRarity
 import de.kazzutils.gui.KeyShortcutsGui
 import de.kazzutils.gui.OptionsGui
 import de.kazzutils.gui.editing.ElementaEditingGui
-import de.kazzutils.utils.randomutils.ChatUtils
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonArray
-import kotlinx.serialization.json.jsonObject
+import de.kazzutils.utils.chat.ChatUtils
 import net.minecraft.command.ICommandSender
 import net.minecraft.util.BlockPos
 import net.minecraft.util.ChatComponentText
@@ -103,7 +100,7 @@ class CommandManager {
                 if (result.isSuccess) {
                     val playerJson = result.getOrNull() // Safely get the JsonObject
                     val test = playerJson!!.getAsJsonArray("profiles")[0].asJsonObject.get("profile_id").asString
-                    ChatUtils.messageToChat("Test -> $test")
+                    //ChatUtils.messageToChat("Test -> $test")
                 } else {
                     val error = result.exceptionOrNull()
                     if (error != null) {
