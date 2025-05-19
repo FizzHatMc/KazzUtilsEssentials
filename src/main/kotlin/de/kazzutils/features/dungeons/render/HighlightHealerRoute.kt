@@ -4,8 +4,6 @@ import de.kazzutils.KazzUtils
 import de.kazzutils.data.m7.coords.HealerRoute
 import de.kazzutils.utils.NewTabUtils
 import de.kazzutils.utils.SimpleRender
-import de.kazzutils.utils.chat.ChatUtils
-import de.kazzutils.utils.randomutils.TabUtils
 import de.kazzutils.utils.skyblockfeatures.CatacombsUtils
 import net.minecraft.util.BlockPos
 import net.minecraftforge.client.event.RenderWorldLastEvent

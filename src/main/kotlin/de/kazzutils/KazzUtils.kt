@@ -14,6 +14,7 @@ import de.kazzutils.features.dungeons.gui.DownTimeObject
 import de.kazzutils.features.dungeons.render.HighlightHealerRoute
 import de.kazzutils.features.event.carnival.Minesweeper
 import de.kazzutils.features.mining.crystalhollows.ModToolsWarner
+import de.kazzutils.features.misc.EventTrigger
 import de.kazzutils.features.misc.KeyShortcuts
 import de.kazzutils.features.misc.MiscStuff
 import de.kazzutils.features.misc.MiscUI
@@ -86,6 +87,9 @@ class KazzUtils {
         reg(ModToolsWarner.ModToolsDisplay())
         reg(HighlightHealerRoute())
         reg(DungeonFeatures())
+        reg(de.kazzutils.features.dungeons.gui.HighlightHealerRoute.HighlightHealerRouteDisplay())
+        reg(EventTrigger())
+        reg(CatacombsUtils())
 
     }
 

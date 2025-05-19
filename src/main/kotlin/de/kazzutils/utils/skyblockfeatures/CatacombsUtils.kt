@@ -3,6 +3,7 @@ package de.kazzutils.utils.skyblockfeatures
 import de.kazzutils.KazzUtils.Companion.mc
 import de.kazzutils.data.enumClass.WitherKingDragons
 import de.kazzutils.event.DungeonBossRoomEnterEvent
+import de.kazzutils.event.OnWorldChangeEvent
 import de.kazzutils.handler.ScoreboardHandler
 
 import de.kazzutils.utils.chat.ChatUtils
@@ -19,6 +20,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent
 
 class CatacombsUtils {
+
+    @SubscribeEvent
+    fun onWorldChange(event: OnWorldChangeEvent){
+        inBossRoom = false
+    }
 
     private var lastmsg: String = ""
     companion object {
@@ -57,8 +63,6 @@ class CatacombsUtils {
             if ((bossName != "The Watcher") && floor != "n" && checkBossName(bossName) && !inBossRoom) {
                 DungeonBossRoomEnterEvent.postAndCatch() //IMPORTANT -> Triggers DungeonBossRoomEnterEvent for other classes
                 inBossRoom = true
-            }else{
-                inBossRoom = false
             }
         }
 

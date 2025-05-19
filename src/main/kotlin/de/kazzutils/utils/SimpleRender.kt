@@ -22,7 +22,6 @@ object SimpleRender {
         val z = pos.z - viewerZ
 
         return BlockPos(x, y, z)
-
     }
 
     //TODO: Add Beacon and Text
