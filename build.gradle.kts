@@ -19,7 +19,40 @@ val mcVersion: String by project
 val version: String by project
 val mixinGroup = "$baseGroup.mixin"
 val modid: String by project
+val modName: String by project
 val transformerFile = file("src/main/resources/accesstransformer.cfg")
+
+val generatedDir = layout.buildDirectory.dir("generated/source/constants")
+
+val generateModConstants by tasks.registering(DefaultTask::class) {
+    val outputDir = generatedDir.get().asFile.resolve("de/kazzutils")
+    val outputFile = outputDir.resolve("ModInfo.kt")
+
+    inputs.property("modId", modid)
+    inputs.property("modName", modName)
+    inputs.property("modVersion", version)
+    outputs.file(outputFile)
+    doLast {
+        outputDir.mkdirs()
+        outputFile.writeText("""
+            package de.kazzutils
+
+            object ModInfo {
+                const val MODID = "$modid"
+                const val NAME = "$modName"
+                const val VERSION = "$version"
+            }
+        """.trimIndent())
+    }
+}
+
+kotlin.sourceSets["main"].kotlin.srcDir(generatedDir)
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    dependsOn(generateModConstants)
+}
+
+
 
 // Toolchains:
 java {
@@ -201,7 +234,7 @@ tasks.withType(org.gradle.jvm.tasks.Jar::class) {
 
 tasks.processResources {
     inputs.property("version", project.version)
-    inputs.property("mcversion", mcVersion)
+    inputs.property("mcVersion", mcVersion)
     inputs.property("modid", modid)
     inputs.property("basePackage", baseGroup)
 

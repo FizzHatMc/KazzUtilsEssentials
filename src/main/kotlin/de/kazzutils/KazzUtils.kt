@@ -65,10 +65,10 @@ import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.ThreadPoolExecutor
 import kotlin.coroutines.CoroutineContext
-
-@Mod(modid = "kazzutils",
+//@Mod(modid = ModInfo.MODID, name = ModInfo.NAME, version = ModInfo.VERSION)
+@Mod(modid = ModInfo.MODID,
     useMetadata = true,
-    version = "0.0.1",
+    version = ModInfo.VERSION,
     clientSideOnly = true,
     guiFactory = "de.kazzutils.core.ForgeGuiFactory")
 class KazzUtils {
@@ -132,7 +132,6 @@ class KazzUtils {
         if(ticks % 20 == 0L) {
             Utils.checkSkyblock()
             config.writeData()
-
             CatacombsUtils.checkCata()
 
 
@@ -155,7 +154,7 @@ class KazzUtils {
 
     @SubscribeEvent
     fun onDisconnect(event: FMLNetworkEvent.ClientDisconnectionFromServerEvent) {
-
+        config.writeData()
     }
 
     @SubscribeEvent
@@ -218,7 +217,6 @@ class KazzUtils {
 
     companion object : CoroutineScope {
         const val MOD_ID = "kazzutils"
-        const val VERSION = "0.0.2"
 
         @JvmStatic
         val mc: Minecraft by lazy {

@@ -41,7 +41,7 @@ class OptionsGui(val parent: GuiScreen? = null) :
             width = 200.pixels()
             height = 20.pixels()
         }.onMouseClick {
-            KazzUtils.config.openGUI() //TODO openGUI()
+            KazzUtils.config.openGUI()
         }
         SimpleButton("Edit Aliases").childOf(window).constrain {
             x = CenterConstraint()
