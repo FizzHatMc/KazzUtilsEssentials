@@ -216,7 +216,6 @@ class KazzUtils {
 
 
     companion object : CoroutineScope {
-        const val MOD_ID = "kazzutils"
 
         @JvmStatic
         val mc: Minecraft by lazy {
@@ -256,7 +255,7 @@ class KazzUtils {
 
         @JvmStatic
         val version: String
-            get() = Loader.instance().indexedModList[MOD_ID]!!.version
+            get() = Loader.instance().indexedModList[ModInfo.MODID]!!.version
 
         val json = Json {
             prettyPrint = true
