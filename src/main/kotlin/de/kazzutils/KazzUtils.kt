@@ -87,7 +87,6 @@ class KazzUtils {
         reg(ModToolsWarner.ModToolsDisplay())
         reg(HighlightHealerRoute())
         reg(DungeonFeatures())
-        reg(de.kazzutils.features.dungeons.gui.HighlightHealerRoute.HighlightHealerRouteDisplay())
         reg(EventTrigger())
         reg(CatacombsUtils())
 
