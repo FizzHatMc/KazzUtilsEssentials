@@ -366,17 +366,12 @@ object Config : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
-        name = "Show Healer Route.",
+        name = "Show Healer Route",
         description = "Displays route the Healer should go for Pre dev. Green = Chest. Red = Break",
         category = "Dungeon",
         subcategory = "Healer"
     )
     var healerRoute = false
-
-
-
-
-
 
 
 }

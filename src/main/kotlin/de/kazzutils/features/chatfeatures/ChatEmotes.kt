@@ -1,5 +1,6 @@
 package de.kazzutils.features.chatfeatures
 
+import de.kazzutils.KazzUtils
 import de.kazzutils.handler.ChatHandler
 import net.minecraft.client.gui.GuiChat
 import net.minecraft.client.gui.GuiTextField
@@ -43,7 +44,7 @@ class ChatEmotes {
 
     @SubscribeEvent
     fun onGuiInput(event: KeyboardInputEvent) {
-        if (event.gui is GuiChat && Keyboard.getEventKeyState() && event.isCancelable)
+        if ((event.gui is GuiChat && Keyboard.getEventKeyState() && event.isCancelable) && KazzUtils.config.chatEmotes)
             if (runReplacement(event.gui as GuiChat)){
                 event.isCanceled = true
             }

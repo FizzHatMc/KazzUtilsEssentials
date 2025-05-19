@@ -114,7 +114,7 @@ class KazzUtils {
         PersistentSave.loadData()
         ScreenRenderer.init()
         config.loadData()
-        HypixelAPI.initialize(API_KEY)
+        HypixelAPI.initialize("NAN")
     }
 
     private var ticks = 0L
@@ -132,6 +132,7 @@ class KazzUtils {
         if(ticks % 20 == 0L) {
             Utils.checkSkyblock()
             config.writeData()
+
             CatacombsUtils.checkCata()
 
 
@@ -218,7 +219,6 @@ class KazzUtils {
     companion object : CoroutineScope {
         const val MOD_ID = "kazzutils"
         const val VERSION = "0.0.2"
-        const val API_KEY = "94ce5984-d4d7-4436-97c3-ffee67af8d34"
 
         @JvmStatic
         val mc: Minecraft by lazy {
