@@ -373,6 +373,24 @@ object Config : Vigilant(
     )
     var healerRoute = false
 
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Show Gemstone Profit",
+        description = "Displays gemstone profit",
+        category = "Mining",
+        subcategory = "Gemstone"
+    )
+    var gemstoneProfit = false
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "API Key",
+        description = "WIP",
+        category = "Miscellaneous",
+        subcategory = "API"
+    )
+    var apiKey = ""
+
 
 }
 

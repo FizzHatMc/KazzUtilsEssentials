@@ -1,5 +1,6 @@
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import de.kazzutils.KazzUtils
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import java.io.BufferedReader
@@ -13,7 +14,7 @@ import java.util.concurrent.Future
 object HypixelAPI {
 
     private const val BASE_URL = "https://api.hypixel.net/v2"
-    private var apiKey: String? = null // Store the API key
+    private var apiKey: String? = KazzUtils.config.apiKey // Store the API key
     private val logger: Logger = LogManager.getLogger("HypixelAPI")
 
     // Use a thread pool to avoid freezing the game.

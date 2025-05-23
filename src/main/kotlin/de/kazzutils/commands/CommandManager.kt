@@ -4,6 +4,7 @@ import HypixelAPI
 import de.kazzutils.KazzUtils.Companion.displayScreen
 import de.kazzutils.commands.SimpleCommand.ProcessCommandRunnable
 import de.kazzutils.data.enumClass.PetRarity
+import de.kazzutils.features.mining.crystalhollows.GemstoneProfit
 import de.kazzutils.gui.KeyShortcutsGui
 import de.kazzutils.gui.OptionsGui
 import de.kazzutils.gui.editing.ElementaEditingGui
@@ -93,35 +94,6 @@ class CommandManager {
             }
         )
 
-        registerCommand("testApi"){
-            //val apiAnswer = HypixelAPI.get("skyblock/profiles", mapOf("uuid" to "85de5df5-3960-428b-bca4-7dce9766ff8f"))
-
-            val playerJson = HypixelAPI.getAsync("skyblock/profiles", mapOf("uuid" to "85de5df5-3960-428b-bca4-7dce9766ff8f")) { result ->
-                if (result.isSuccess) {
-                    val playerJson = result.getOrNull() // Safely get the JsonObject
-                    val test = playerJson!!.getAsJsonArray("profiles")[0].asJsonObject.get("profile_id").asString
-                    //ChatUtils.messageToChat("Test -> $test")
-                } else {
-                    val error = result.exceptionOrNull()
-                    if (error != null) {
-                        println("Error fetching player data: ${error.message}") // Log the error
-                        // Handle the error (e.g., show an error message to the player).  Make sure this is done on the main thread if it updates the UI.
-                    }
-                }
-            }
-
-
-            //val firesaleJsonSimulated = Gson().fromJson(jsonString, JsonObject::class.java)
-
-
-            // Get the "sales" array.
-            //val salesArray: JsonArray = firesaleJsonSimulated.getAsJsonArray("sales")
-
-
-
-
-
-        }
 
         /*
         registerCommand("formatmessage") { args ->

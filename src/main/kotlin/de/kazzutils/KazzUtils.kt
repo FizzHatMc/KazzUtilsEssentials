@@ -13,6 +13,7 @@ import de.kazzutils.features.dungeons.DungeonFeatures
 import de.kazzutils.features.dungeons.gui.DownTimeObject
 import de.kazzutils.features.dungeons.render.HighlightHealerRoute
 import de.kazzutils.features.event.carnival.Minesweeper
+import de.kazzutils.features.mining.crystalhollows.GemstoneProfit
 import de.kazzutils.features.mining.crystalhollows.ModToolsWarner
 import de.kazzutils.features.misc.EventTrigger
 import de.kazzutils.features.misc.KeyShortcuts
@@ -89,6 +90,7 @@ class KazzUtils {
         reg(DungeonFeatures())
         reg(EventTrigger())
         reg(CatacombsUtils())
+        reg(GemstoneProfit.GemstoneProfitDisplay())
 
     }
 
@@ -104,7 +106,8 @@ class KazzUtils {
             EventHandler,
             ChatUtils,
             ModToolsWarner,
-            MiscUI
+            MiscUI,
+            GemstoneProfit
 
         ).forEach(MinecraftForge.EVENT_BUS::register)
     }
@@ -114,7 +117,7 @@ class KazzUtils {
         PersistentSave.loadData()
         ScreenRenderer.init()
         config.loadData()
-        HypixelAPI.initialize("NAN")
+        HypixelAPI.initialize(config.apiKey)
     }
 
     private var ticks = 0L
@@ -134,8 +137,11 @@ class KazzUtils {
             config.writeData()
             CatacombsUtils.checkCata()
 
-
         }//each second
+        if(ticks % 200 == 0L) {
+            GemstoneProfit.checkPrice()
+
+        }
 
         if (displayScreen != null) {
             if (mc.thePlayer?.openContainer == mc.thePlayer?.inventoryContainer) {
