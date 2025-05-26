@@ -4,6 +4,7 @@ import de.kazzutils.KazzUtils
 import de.kazzutils.KazzUtils.Companion.mc
 import de.kazzutils.core.structure.GuiElement
 import de.kazzutils.utils.RenderUtils
+import de.kazzutils.utils.chat.ChatUtils
 import de.kazzutils.utils.graphics.ScreenRenderer
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -23,8 +24,7 @@ object ModToolsWarner {
     @SubscribeEvent
     fun onChat(event: ClientChatReceivedEvent) {
         if (event.type.toInt() == 2 || !KazzUtils.config.modTools) return
-        var msg = event.message.unformattedTextForChat
-
+        val msg = ChatUtils.noColorCodes(event.message.unformattedText)
 
         tools.forEach { tool -> if(msg.contains("found $tool")) foundTools += tool}
         amountOfTools = foundTools.size
