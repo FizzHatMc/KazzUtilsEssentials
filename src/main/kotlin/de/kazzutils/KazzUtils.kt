@@ -27,13 +27,14 @@ import de.kazzutils.handler.hook.EntityPlayerSPHook
 import de.kazzutils.handler.transformers.PacketThreadUtilTransformer
 import de.kazzutils.transformers.AccessorGuiStreamUnavailable
 import de.kazzutils.transformers.AccessorSettingsGui
+import de.kazzutils.utils.skyblockfeatures.BossbarData
 import de.kazzutils.utils.NewTabUtils
-import de.kazzutils.utils.SimpleRender
 import de.kazzutils.utils.Utils
 import de.kazzutils.utils.chat.ChatUtils
 import de.kazzutils.utils.colors.CustomColor
 import de.kazzutils.utils.graphics.ScreenRenderer
 import de.kazzutils.utils.skyblockfeatures.CatacombsUtils
+import io.ktor.http.content.CachingProperty
 import kotlinx.coroutines.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -107,7 +108,8 @@ class KazzUtils {
             ChatUtils,
             ModToolsWarner,
             MiscUI,
-            GemstoneProfit
+            GemstoneProfit,
+            BossbarData
 
         ).forEach(MinecraftForge.EVENT_BUS::register)
     }
@@ -136,7 +138,9 @@ class KazzUtils {
             Utils.checkSkyblock()
             config.writeData()
             CatacombsUtils.checkCata()
-
+            if((CatacombsUtils.inM7 || CatacombsUtils.floor.contains("f7",true) ) && CatacombsUtils.inBossRoom){
+                CatacombsUtils.checkF7Area()
+            }
         }//each second
         if(ticks % 200 == 0L) {
             GemstoneProfit.checkPrice()

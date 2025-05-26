@@ -2,6 +2,7 @@ package de.kazzutils.utils
 
 import de.kazzutils.KazzUtils
 import de.kazzutils.KazzUtils.Companion.mc
+import de.kazzutils.utils.chat.ChatUtils
 import de.kazzutils.utils.colors.ColorFactory.web
 import de.kazzutils.utils.colors.CustomColor
 import de.kazzutils.utils.colors.CyclingTwoColorGradient
@@ -10,12 +11,17 @@ import gg.essential.vigilance.Vigilant
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import net.minecraft.client.settings.GameSettings
+import net.minecraft.entity.boss.BossStatus
+import net.minecraftforge.client.event.RenderGameOverlayEvent
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.awt.Color
 import java.io.File
+
 
 object Utils {
 
     var inSkyblock = false
+    var bossName = ""
 
     fun getKeyDisplayStringSafe(keyCode: Int): String =
         runCatching { GameSettings.getKeyDisplayString(keyCode) }.getOrNull() ?: "Key $keyCode"
@@ -27,6 +33,20 @@ object Utils {
     fun String.removeMinecraftColorCodes() : String{
         return Regex("§[0-9A-FK-ORa-fk-or]").replace(this, "")
     }
+
+    @SubscribeEvent
+    fun onRenderOverlay(event: RenderGameOverlayEvent.Text?) {
+        if (BossStatus.hasColorModifier && BossStatus.bossName != null) {
+            bossName = BossStatus.bossName
+            val health = BossStatus.healthScale
+
+            // Do something with the boss bar name
+            ChatUtils.messageToChat("Bossbar Name: $bossName | Health: $health")
+        }
+    }
+
+
+
 
     fun checkSkyblock() {
         val player = mc.thePlayer ?: return

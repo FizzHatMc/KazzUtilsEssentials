@@ -31,6 +31,17 @@ class CatacombsUtils {
         var inM7: Boolean = false
         var floor: String = "n"
         var inBossRoom = false
+        var f7Phase = "n"
+
+        fun checkF7Area() {
+            val bossBar = BossbarData.getBossbar()
+            when {
+                bossBar.contains("Maxor",true) -> f7Phase = "1"
+                bossBar.contains("Storm",true) -> f7Phase = "2"
+                bossBar.contains("Goldor",true) -> f7Phase = "3"
+                bossBar.contains("Necron",true) -> f7Phase = "4"
+            }
+        }
 
         fun inDungeon() : Boolean {
             val scoreboard: List<String> = ScoreboardHandler.getSidebarLines()

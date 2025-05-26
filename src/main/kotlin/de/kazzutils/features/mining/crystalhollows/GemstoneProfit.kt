@@ -7,6 +7,7 @@ import de.kazzutils.utils.RenderUtils
 import de.kazzutils.utils.chat.ChatUtils
 import de.kazzutils.utils.graphics.ScreenRenderer
 import com.google.gson.JsonObject
+import de.kazzutils.utils.NewTabUtils
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.concurrent.Future
@@ -110,7 +111,7 @@ object GemstoneProfit{
 
     class GemstoneProfitDisplay: GuiElement("Gemstone Profit",x=400,y=80){
         override fun render() {
-            if(!KazzUtils.config.gemstoneProfit) return
+            if(!KazzUtils.config.gemstoneProfit && (!NewTabUtils.area.contains("Hollows",true) || !NewTabUtils.area.contains("Glacite",true)) && flawedAmmount==0) return
             var displayText = """
                 §4 Pristine Procs: ${pristineProc}
                 §4 Flawed Gems: ${flawedAmmount}

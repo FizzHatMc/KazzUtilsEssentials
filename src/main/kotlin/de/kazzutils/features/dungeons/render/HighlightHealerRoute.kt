@@ -13,7 +13,8 @@ import java.awt.Color
 class HighlightHealerRoute {
     @SubscribeEvent
     fun onWorldRender(event: RenderWorldLastEvent) {
-        if((CatacombsUtils.floor.contains("F7",true) || CatacombsUtils.inM7) && NewTabUtils.playerClass.contains("Healer",true) && KazzUtils.config.healerRoute && CatacombsUtils.inBossRoom){
+        if(!KazzUtils.config.healerRoute) return
+        if((CatacombsUtils.floor.contains("F7",true) || CatacombsUtils.inM7) && NewTabUtils.playerClass.contains("Healer",true) && CatacombsUtils.inBossRoom && (CatacombsUtils.f7Phase=="2" || CatacombsUtils.f7Phase=="1")){
             val healerRoute : Map<BlockPos, Color> = HealerRoute.route()
             val healerLines = HealerRoute.walkRoute()
             SimpleRender.highlightBlockListColors(healerRoute,event)
